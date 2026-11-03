@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 320" fill="none">
+  <defs>
+    <radialGradient id="emeraldGlow" cx="50%" cy="45%" r="65%">
+      <stop offset="0%" stop-color="#134e4a"/>
+      <stop offset="55%" stop-color="#062c28"/>
+      <stop offset="100%" stop-color="#031716"/>
+    </radialGradient>
+    <linearGradient id="amberText" x1="0" y1="0" x2="560" y2="320" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#fde68a"/>
+      <stop offset="50%" stop-color="#f59e0b"/>
+      <stop offset="100%" stop-color="#d97706"/>
+    </linearGradient>
+  </defs>
+  <rect width="560" height="320" fill="url(#emeraldGlow)"/>
+  <!-- Subtle Islamic Geometric Pattern Overlay -->
+  <g opacity="0.12" stroke="#fbbf24" stroke-width="1">
+    <circle cx="280" cy="160" r="140"/>
+    <circle cx="280" cy="160" r="105"/>
+    <path d="M140 160H420M280 20V300M180 60L380 260M380 60L180 260"/>
+  </g>
+  <!-- Top Tag -->
+  <text x="280" y="48" text-anchor="middle" fill="#a7f3d0" font-family="Inter, sans-serif" font-size="13" font-weight="700" letter-spacing="4">BÜYÜKLERİN AYAK İZLERİ • AKTİF KAMP</text>
+  <!-- Arabic Calligraphy Title -->
+  <text x="280" y="135" text-anchor="middle" fill="url(#amberText)" font-family="Amiri, serif" font-size="64" font-weight="700">الإمام الغزالي</text>
+  <!-- Main Turkish Title -->
+  <text x="280" y="218" text-anchor="middle" font-family="Inter, sans-serif" font-size="54" font-weight="900" letter-spacing="2">
+    <tspan fill="#ffffff">İMÂM </tspan>
+    <tspan fill="#f59e0b">GAZÂLÎ</tspan>
+  </text>
+  <text x="280" y="264" text-anchor="middle" fill="#ffffff" font-family="Inter, sans-serif" font-size="28" font-weight="800" letter-spacing="14">KAMPI</text>
+  <rect x="190" y="284" width="180" height="3" rx="1.5" fill="url(#amberText)" opacity="0.8"/>
+</svg>

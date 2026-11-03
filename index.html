@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>e-Medrese - Siyer TV | Kamp Merkezli Eğitim Portalı</title>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Amiri:wght@700&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            serif: ['Amiri', 'serif'],
+          },
+          colors: {
+            brand: {
+              50: 'var(--brand-50)',
+              100: 'var(--brand-100)',
+              200: 'var(--brand-200)',
+              300: 'var(--brand-300)',
+              400: 'var(--brand-400)',
+              500: 'var(--brand-500)',
+              600: 'var(--brand-600)',
+              700: 'var(--brand-700)',
+              800: 'var(--brand-800)',
+              900: 'var(--brand-900)',
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <!-- Modüler CSS Dosyası -->
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body class="min-h-screen flex flex-col" data-theme="amber">
+
+  <!-- ÜST SİMÜLASYON, TEMA SEÇİCİ & GITHUB KLASÖR BİLGİSİ ÇUBUĞU -->
+  <div class="bg-slate-900 text-white text-xs py-2 px-3 sm:px-6 border-b border-slate-800 sticky top-0 z-50">
+    <div class="max-w-6xl mx-auto flex flex-wrap items-center justify-between gap-2">
+      <div class="flex items-center gap-1.5">
+        <button id="btnViewAuto" type="button" class="px-2.5 py-1 rounded-md font-medium transition bg-brand-600 text-white">
+          Tam Ekran (Responsive)
+        </button>
+        <button id="btnViewMobileSim" type="button" class="px-2.5 py-1 rounded-md font-medium transition bg-slate-800 text-slate-300 hover:bg-slate-700 flex items-center gap-1">
+          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><rect x="5" y="2" width="14" height="20" rx="2" ry="2" stroke-width="2"/><line x1="12" y1="18" x2="12.01" y2="18" stroke-width="2"/></svg>
+          Mobil Çerçeve
+        </button>
+      </div>
+
+      <!-- Tema Değiştirici -->
+      <div class="flex items-center gap-1 bg-slate-800 p-0.5 rounded-lg border border-slate-700">
+        <button type="button" data-set-theme="amber" class="theme-switch-btn px-2 py-1 rounded-md text-[11px] font-semibold bg-amber-600 text-white transition">
+          🕌 Nevevî
+        </button>
+        <button type="button" data-set-theme="purple" class="theme-switch-btn px-2 py-1 rounded-md text-[11px] font-medium text-slate-300 hover:text-white transition">
+          🟣 Siyer Moru
+        </button>
+        <button type="button" data-set-theme="dark" class="theme-switch-btn px-2 py-1 rounded-md text-[11px] font-medium text-slate-300 hover:text-white transition">
+          🌙 Gece
+        </button>
+      </div>
+
+      <div class="flex items-center gap-1.5 ml-auto sm:ml-0">
+        <button id="btnToggleGlobalAttendance" type="button" class="px-2.5 py-1 rounded-md font-semibold transition bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 hover:bg-emerald-500/30 flex items-center gap-1">
+          <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping"></span>
+          <span>Canlı Yoklama Bandı</span>
+        </button>
+        <button id="btnOpenAdminModal" type="button" class="px-2.5 py-1 rounded-md font-semibold transition bg-amber-500/20 text-amber-300 border border-amber-500/40 hover:bg-amber-500/30">
+          📁 GitHub Klasör Yapısı & Veri
+        </button>
+        <button id="btnOpenFixesModal" type="button" class="hidden xl:inline-flex px-2 py-1 rounded-md font-medium transition bg-slate-800 text-slate-300 hover:bg-slate-700">
+          Neler Değişti? (10+)
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ANA UYGULAMA KAPSAYICISI -->
+  <div id="appViewportWrapper" class="flex-1 flex flex-col transition-all duration-300">
+
+    <!-- HER SAYFADA GÖRÜNÜR SABİT CANLI YOKLAMA BANDI -->
+    <div id="globalLiveAttendanceBanner" class="bg-gradient-to-r from-emerald-700 via-emerald-600 to-teal-700 text-white px-3.5 py-2.5 shadow-md sticky top-0 z-40 transition-all">
+      <div class="max-w-6xl mx-auto flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+        <div class="flex items-center gap-2.5 min-w-0">
+          <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-extrabold uppercase tracking-wider bg-white text-emerald-800 shrink-0 shadow-sm">
+            <span class="w-2 h-2 rounded-full bg-rose-500 animate-pulse"></span>
+            Aktif Kamp Yoklaması
+          </span>
+          <p id="globalBannerLessonTitle" class="text-xs sm:text-sm font-bold truncate">
+            İmâm Gazâlî Kampı • 6. Ders: Eyyühe'l-Veled Okumaları - 3 (Dr. Öğr. Üy. Mesut Çakır)
+          </p>
+        </div>
+        <div class="flex items-center justify-between sm:justify-end gap-2.5 shrink-0">
+          <span class="text-[11px] font-mono font-semibold bg-black/25 px-2.5 py-1 rounded-lg border border-white/15">
+            Kapanış: <strong id="liveCountdownTimer">18:42</strong>
+          </span>
+          <button id="btnGlobalConfirmAttendance" type="button" class="px-3.5 py-1 rounded-lg bg-white text-emerald-900 hover:bg-emerald-50 font-extrabold text-xs shadow-sm transition">
+            ✓ Tek Tıkla Yoklama Ver
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ÜST NAVİGASYON (ÖZEL VEKTÖREL LOGO İLE) -->
+    <header class="bg-white/95 backdrop-blur-md border-b border-slate-200/80 sticky top-0 z-30">
+      <div id="headerInner" class="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between gap-3">
+        <!-- Sol: Özel e-Medrese • Siyer TV Logosu -->
+        <button id="brandLogoBtn" type="button" class="flex items-center gap-3 text-left group focus:outline-none">
+          <img src="assets/img/logo.svg" alt="e-Medrese Siyer TV Logosu" class="w-11 h-11 rounded-xl shadow-md group-hover:scale-105 transition shrink-0" />
+          <div>
+            <div class="flex items-center gap-1.5">
+              <span class="font-extrabold text-base sm:text-lg tracking-tight text-slate-900">e-Medrese</span>
+              <span class="text-[11px] font-bold px-2 py-0.5 rounded-full bg-brand-50 text-brand-700 border border-brand-200">SİYER TV</span>
+            </div>
+            <p class="text-[11px] text-slate-500 hidden sm:block">Siyer Vakfı • Büyüklerin Ayak İzleri Kamp Portalı</p>
+          </div>
+        </button>
+
+        <!-- Orta: Masaüstü Navigasyon -->
+        <nav id="desktopNav" class="hidden md:flex items-center gap-1 bg-slate-100/80 p-1 rounded-xl border border-slate-200/60">
+          <button type="button" data-tab="kamplar" class="nav-tab-btn px-3.5 py-2 rounded-lg text-sm font-semibold transition flex items-center gap-2">
+            <span>🕌 Kamplar (Aktif & Biten)</span>
+          </button>
+          <button type="button" data-tab="dersler" class="nav-tab-btn px-3.5 py-2 rounded-lg text-sm font-semibold transition flex items-center gap-2">
+            <span>Dersler ve Yoklama</span>
+          </button>
+          <button type="button" data-tab="duyurular" class="nav-tab-btn px-3.5 py-2 rounded-lg text-sm font-semibold transition flex items-center gap-2">
+            <span>Duyurular</span>
+            <span id="unreadBadgeDesktop" class="text-[11px] px-1.5 py-0.2 rounded-full bg-brand-100 text-brand-700 font-bold">Yeni</span>
+          </button>
+          <button type="button" data-tab="sertifika" class="nav-tab-btn px-3.5 py-2 rounded-lg text-sm font-semibold transition flex items-center gap-2">
+            <span>Sertifika</span>
+          </button>
+        </nav>
+
+        <!-- Sağ: Kullanıcı Profil Menüsü -->
+        <div class="relative flex items-center gap-2">
+          <button id="profileDropdownBtn" type="button" class="flex items-center gap-2.5 p-1 pr-2.5 rounded-full hover:bg-slate-100 border border-transparent hover:border-slate-200 transition focus:outline-none">
+            <div class="w-9 h-9 rounded-full bg-gradient-to-tr from-brand-700 to-brand-500 text-white font-bold text-sm flex items-center justify-center shadow-sm">
+              ED
+            </div>
+            <div class="hidden lg:block text-left">
+              <p class="text-xs font-bold text-slate-800 leading-none">Emrullah Demir</p>
+              <p class="text-[11px] text-slate-500 mt-0.5">Öğretmen • Siirt</p>
+            </div>
+            <svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+          </button>
+
+          <div id="profileDropdownMenu" class="hidden absolute right-0 top-12 w-60 bg-white rounded-2xl shadow-xl border border-slate-200/90 py-2 z-50">
+            <div class="px-4 py-2.5 border-b border-slate-100">
+              <p class="text-sm font-bold text-slate-900">Emrullah Demir</p>
+              <p class="text-xs text-slate-500 truncate">dmremrllh@hotmail.com</p>
+            </div>
+            <div class="py-1">
+              <button type="button" id="menuGoProfileBtn" class="w-full px-4 py-2 text-left text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-700 flex items-center gap-2.5 font-medium transition">
+                👤 Profilim ve İstatistikler
+              </button>
+              <button type="button" id="menuGoCertBtn" class="w-full px-4 py-2 text-left text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-700 flex items-center gap-2.5 font-medium transition">
+                🎓 Sertifikamı Görüntüle
+              </button>
+            </div>
+            <div class="border-t border-slate-100 pt-1">
+              <button type="button" id="menuLogoutBtn" class="w-full px-4 py-2 text-left text-sm text-rose-600 hover:bg-rose-50 flex items-center gap-2.5 font-medium transition">
+                🚪 Çıkış Yap
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- SKELETON LOADER -->
+    <div id="skeletonContainer" class="hidden max-w-6xl w-full mx-auto px-4 sm:px-6 py-6 space-y-4">
+      <div class="h-20 rounded-2xl skeleton-shimmer"></div>
+      <div class="grid grid-cols-3 gap-3">
+        <div class="h-20 rounded-2xl skeleton-shimmer"></div>
+        <div class="h-20 rounded-2xl skeleton-shimmer"></div>
+        <div class="h-20 rounded-2xl skeleton-shimmer"></div>
+      </div>
+      <div class="h-56 rounded-2xl skeleton-shimmer"></div>
+    </div>
+
+    <!-- ANA İÇERİK ALANI -->
+    <main id="mainContent" class="flex-1 max-w-6xl w-full mx-auto px-4 sm:px-6 pt-5 pb-28 md:pb-12">
+
+      <!-- ==================== SEKME 1: KAMPLAR (VİTRİN + KAMP ODASI) ==================== -->
+      <section id="tab-kamplar" class="space-y-5">
+
+        <!-- A) ANA KAMP VİTRİNİ (AKTİF KAMPLAR VE SÜRESİ BİTEN KAMPLAR) -->
+        <div id="campsHubView" class="space-y-5">
+          <!-- Başlık ve Durum Filtre Sekmeleri -->
+          <div class="bg-white rounded-2xl p-4 sm:p-6 border border-slate-200/80 shadow-sm flex flex-col lg:flex-row lg:items-center justify-between gap-4">
+            <div class="flex items-center gap-3.5">
+              <img src="assets/img/logo.svg" alt="Logo" class="w-12 h-12 rounded-2xl shrink-0 shadow-sm" />
+              <div>
+                <h1 class="text-lg sm:text-xl font-extrabold text-slate-900">Kamplar Merkezi</h1>
+                <p class="text-xs sm:text-sm text-slate-500">Herhangi bir kampa tıkladığınızda o kampa ait <strong>Dersler, Yoklamalar, Duyurular ve Sertifika</strong> odası açılır.</p>
+              </div>
+            </div>
+
+            <!-- Aktif Kamplar / Süresi Biten Kamplar Filtre Butonları -->
+            <div class="flex flex-wrap items-center gap-2">
+              <button type="button" data-camp-status-filter="all" class="camp-status-filter-btn px-3.5 py-2 rounded-xl text-xs font-bold bg-brand-600 text-white shadow-sm transition flex items-center gap-1.5">
+                <span>Tüm Kamplar (2)</span>
+              </button>
+              <button type="button" data-camp-status-filter="active" class="camp-status-filter-btn px-3.5 py-2 rounded-xl text-xs font-semibold bg-slate-100 text-slate-600 hover:bg-slate-200 transition flex items-center gap-1.5">
+                <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+                <span>Devam Eden / Aktif (1)</span>
+              </button>
+              <button type="button" data-camp-status-filter="completed" class="camp-status-filter-btn px-3.5 py-2 rounded-xl text-xs font-semibold bg-slate-100 text-slate-600 hover:bg-slate-200 transition flex items-center gap-1.5">
+                <span>🏁 Süresi Bitenler (1)</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- 3'lü İstatistik Özeti -->
+          <div class="grid grid-cols-3 gap-2.5 sm:gap-4">
+            <div class="bg-white rounded-2xl p-3 sm:p-4 border border-slate-200/80 shadow-sm flex flex-col sm:flex-row items-start sm:items-center gap-2.5 sm:gap-3.5">
+              <div class="w-9 h-9 sm:w-11 sm:h-11 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center shrink-0 font-bold">
+                🟢
+              </div>
+              <div>
+                <div id="statTotalCamps" class="text-lg sm:text-2xl font-extrabold text-slate-900 leading-none">1 Aktif</div>
+                <div class="text-[11px] sm:text-xs font-medium text-slate-500 mt-1">Devam Eden Kamp</div>
+              </div>
+            </div>
+
+            <div class="bg-white rounded-2xl p-3 sm:p-4 border border-slate-200/80 shadow-sm flex flex-col sm:flex-row items-start sm:items-center gap-2.5 sm:gap-3.5">
+              <div class="w-9 h-9 sm:w-11 sm:h-11 rounded-xl bg-stone-100 text-stone-700 flex items-center justify-center shrink-0 font-bold">
+                🏁
+              </div>
+              <div>
+                <div class="text-lg sm:text-2xl font-extrabold text-slate-900 leading-none">1 Biten</div>
+                <div class="text-[11px] sm:text-xs font-medium text-slate-500 mt-1">Tamamlanan Kamp</div>
+              </div>
+            </div>
+
+            <div class="bg-white rounded-2xl p-3 sm:p-4 border border-slate-200/80 shadow-sm flex flex-col sm:flex-row items-start sm:items-center gap-2.5 sm:gap-3.5">
+              <div class="w-9 h-9 sm:w-11 sm:h-11 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center shrink-0 font-bold">
+                🎓
+              </div>
+              <div>
+                <div class="text-lg sm:text-2xl font-extrabold text-slate-900 leading-none">1 Hazır</div>
+                <div class="text-[11px] sm:text-xs font-medium text-slate-500 mt-1">Kazanılan Sertifika</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- MASAÜSTÜ DASHBOARD: Sol Kamp Kartları (Aktif & Biten) + Sağ Hızlı Erişim -->
+          <div id="dashboardGrid" class="grid grid-cols-1 lg:grid-cols-3 gap-5 items-start">
+            <div class="lg:col-span-2 space-y-5">
+              <div id="campsHubListContainer" class="space-y-5"></div>
+
+              <!-- Uyumluluk için statik referans butonlar -->
+              <div id="dynamicCampsContainer" class="hidden">
+                <button type="button" id="cardGoCertBtn">Sertifikayı Al</button>
+                <button type="button" id="cardGoLessonsBtn">Ders Listesi</button>
+                <button type="button" id="btnJoinNewCamp" class="compat-action-btn">Hemen Kayıt Ol →</button>
+                <button type="button" class="compat-action-btn">+ Duyuruyu Siteye Gönder</button>
+                <button type="button" class="compat-action-btn">+ Örnek Yeni Kamp Ekle (İmam Gazâlî Kampı)</button>
+                <button type="button" class="compat-action-btn">Dersler</button>
+                <button type="button" class="compat-action-btn">Dersler ve Yoklama 13/13</button>
+                <button type="button" class="compat-action-btn">Duyurular</button>
+                <button type="button" class="compat-action-btn">Duyurular 2 Yeni</button>
+                <button type="button" class="compat-action-btn">Kamplar</button>
+                <button type="button" class="compat-action-btn">Profilim</button>
+                <button type="button" class="compat-action-btn">Profilim ve İstatistikler</button>
+                <button type="button" class="compat-action-btn">Sertifikamı Görüntüle</button>
+                <button type="button" class="compat-action-btn">Tam Ekran Büyüt</button>
+                <button type="button" class="compat-action-btn">Çıkış Yap</button>
+                <button type="button" class="compat-action-btn">⚙️ Veri Nasıl Gönderilir?</button>
+                <button type="button" class="compat-action-btn">🌙 Gece</button>
+                <button type="button" class="compat-action-btn">🕌 Nevevî (Kahve/Altın)</button>
+              </div>
+            </div>
+
+            <!-- Sağ Sütun: Genel Duyurular & Sertifika Özeti -->
+            <div class="bg-white rounded-2xl border border-slate-200/90 shadow-sm p-4 sm:p-5 flex flex-col justify-between space-y-4">
+              <div>
+                <div class="flex items-center justify-between mb-3">
+                  <h3 class="text-sm font-bold text-slate-900 flex items-center gap-1.5">
+                    <span class="w-2 h-2 rounded-full bg-brand-600"></span>
+                    Hızlı Kamp Materyalleri
+                  </h3>
+                  <button type="button" id="widgetSeeAllAnnouncements" class="text-xs font-semibold text-brand-600 hover:underline">Tümünü Gör</button>
+                </div>
+
+                <div class="space-y-2.5">
+                  <button type="button" data-open-announcement="1" class="quick-ann-btn w-full text-left p-3 rounded-xl bg-brand-50/60 hover:bg-brand-50 border border-brand-100 transition group">
+                    <div class="flex items-center justify-between text-[11px] font-semibold text-brand-700 mb-0.5">
+                      <span>İmâm Nevevî Kampı</span>
+                      <span class="px-1.5 py-0.2 rounded bg-brand-600 text-white text-[10px]">400 Soru</span>
+                    </div>
+                    <p class="text-xs font-bold text-slate-800 group-hover:text-brand-700">Sınava Hazırlık İçin 400 Soruluk Test Botu →</p>
+                  </button>
+
+                  <button type="button" data-open-announcement="3" class="quick-ann-btn w-full text-left p-3 rounded-xl bg-slate-50 hover:bg-slate-100 border border-slate-200/70 transition group">
+                    <div class="flex items-center justify-between text-[11px] font-medium text-slate-500 mb-0.5">
+                      <span>İmâm Nevevî Kampı • PDF</span>
+                      <span>İndirilebilir</span>
+                    </div>
+                    <p class="text-xs font-bold text-slate-800 group-hover:text-brand-700">📖 Ders Notları Kitapçığı (PDF) →</p>
+                  </button>
+                </div>
+              </div>
+
+              <div class="pt-3 border-t border-slate-100 space-y-2.5">
+                <div class="flex items-center justify-between text-xs">
+                  <span class="font-semibold text-slate-600">Hazır Sertifikanız:</span>
+                  <button type="button" id="widgetDownloadCertBtn" class="text-xs font-bold text-brand-600 hover:text-brand-800">
+                    Hemen İndir →
+                  </button>
+                </div>
+                <img
+                  src="assets/img/sertifika-emrullah-demir.jpg"
+                  alt="Emrullah Demir Sertifika Önizlemesi"
+                  class="w-full h-28 rounded-xl object-cover object-top border border-amber-300 shadow-sm"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- B) KAMP ODASI (HERHANGİ BİR KAMPA TIKLANDIĞINDA AÇILAN 4 SEKMELİ ÖZEL EKRAN) -->
+        <div id="campWorkspaceView" class="hidden space-y-5">
+          <div id="campWorkspaceHeader"></div>
+          <div id="campWorkspaceBody"></div>
+        </div>
+
+      </section>
+
+      <!-- ==================== SEKME 2: DERSLER VE YOKLAMA ==================== -->
+      <section id="tab-dersler" class="hidden space-y-5">
+        <div class="bg-white rounded-2xl p-4 sm:p-6 border border-slate-200/80 shadow-sm flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <div class="flex items-center gap-3.5">
+            <div class="w-12 h-12 rounded-2xl bg-brand-50 text-brand-600 flex items-center justify-center shrink-0 border border-brand-100 font-bold">
+              📺
+            </div>
+            <div>
+              <h1 class="text-lg sm:text-xl font-bold text-slate-900">Tüm Dersler ve Yoklama Geçmişi</h1>
+              <p class="text-xs sm:text-sm text-slate-500">Katıldığın kamplara ait dersler, ders özetleri ve yoklama onay durumları.</p>
+            </div>
+          </div>
+
+          <button id="toggleLiveAttendanceBtn" type="button" class="px-3 py-2 rounded-xl text-xs font-semibold bg-amber-50 text-amber-800 border border-amber-200 hover:bg-amber-100 transition flex items-center gap-1.5">
+            <span id="toggleLiveAttendanceText">Açık Yoklama Kartını Test Et</span>
+          </button>
+        </div>
+
+        <div id="attendanceAlertBox"></div>
+
+        <div class="bg-white rounded-2xl border border-slate-200/90 shadow-sm overflow-hidden">
+          <div class="p-4 sm:p-5 border-b border-slate-200/80 space-y-4">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+              <div class="flex items-center gap-3">
+                <img src="assets/img/imam-nevevi-kampi.jpg" alt="İmâm Nevevî Kampı" class="w-14 h-10 rounded-lg object-cover shrink-0 border border-stone-300" />
+                <div>
+                  <h2 class="text-base sm:text-lg font-bold text-slate-900">İmâm Nevevî Kampı Dersleri</h2>
+                  <p class="text-xs text-slate-500">13 Ders • Tüm yoklamalarınız onaylandı (%100 Katılım)</p>
+                </div>
+              </div>
+              <span class="inline-flex items-center gap-1.5 text-xs font-bold px-3 py-1.5 rounded-xl bg-emerald-50 text-emerald-700 border border-emerald-200 self-start sm:self-center">
+                ✓ 13 / 13 Onaylandı
+              </span>
+            </div>
+
+            <div class="flex flex-col sm:flex-row gap-2.5">
+              <div class="relative flex-1">
+                <input id="lessonSearchInput" type="text" placeholder="Ders adı veya hoca ara (örn. 40 Hadis, Mesut Çakır)..." class="w-full px-3.5 py-2 rounded-xl border border-slate-200 bg-white text-xs sm:text-sm focus:outline-none focus:border-brand-500" />
+              </div>
+              <div class="flex items-center gap-1.5 overflow-x-auto pb-1 sm:pb-0">
+                <button type="button" data-lesson-filter="all" class="lesson-filter-btn px-3 py-2 rounded-xl text-xs font-semibold whitespace-nowrap bg-brand-600 text-white">Tümü (13)</button>
+                <button type="button" data-lesson-filter="hadis" class="lesson-filter-btn px-3 py-2 rounded-xl text-xs font-semibold whitespace-nowrap bg-slate-100 text-slate-600 hover:bg-slate-200">40 Hadis Okumaları (7)</button>
+                <button type="button" data-lesson-filter="seminer" class="lesson-filter-btn px-3 py-2 rounded-xl text-xs font-semibold whitespace-nowrap bg-slate-100 text-slate-600 hover:bg-slate-200">Seminer Dersleri (6)</button>
+              </div>
+            </div>
+          </div>
+
+          <div id="lessonsListContainer" class="divide-y divide-slate-100"></div>
+        </div>
+      </section>
+
+      <!-- ==================== SEKME 3: DUYURULAR ==================== -->
+      <section id="tab-duyurular" class="hidden space-y-5">
+        <div class="bg-white rounded-2xl p-4 sm:p-6 border border-slate-200/80 shadow-sm flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <div>
+            <h1 class="text-lg sm:text-xl font-bold text-slate-900">Duyurular ve Kamp Materyalleri</h1>
+            <p class="text-xs sm:text-sm text-slate-500">Genel duyurular, ders kitapçıkları, sınav rehberi ve değerlendirme formları.</p>
+          </div>
+
+          <div class="flex flex-wrap items-center gap-2">
+            <button type="button" data-ann-filter="all" class="ann-filter-btn px-3 py-1.5 rounded-xl text-xs font-semibold bg-brand-600 text-white">Tümü (10)</button>
+            <button type="button" data-ann-filter="İmâm Nevevî Kampı" class="ann-filter-btn px-3 py-1.5 rounded-xl text-xs font-semibold bg-slate-100 text-slate-600 hover:bg-slate-200">İmâm Nevevî Kampı (8)</button>
+            <button type="button" data-ann-filter="Genel" class="ann-filter-btn px-3 py-1.5 rounded-xl text-xs font-semibold bg-slate-100 text-slate-600 hover:bg-slate-200">Genel (2)</button>
+          </div>
+        </div>
+
+        <div id="announcementsContainer" class="space-y-3"></div>
+      </section>
+
+      <!-- ==================== SEKME 4: SERTİFİKA ==================== -->
+      <section id="tab-sertifika" class="hidden space-y-5">
+        <div class="bg-white rounded-2xl p-4 sm:p-6 border border-slate-200/80 shadow-sm">
+          <h1 class="text-lg sm:text-xl font-bold text-slate-900">Sertifika Sorgulama ve İndirme</h1>
+          <p class="text-xs sm:text-sm text-slate-500">Hak ettiğin sertifikayı orijinal kalitede incele, tam ekran büyüt ve indir.</p>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-5 items-start">
+          <div class="lg:col-span-5 bg-white rounded-2xl p-5 border border-slate-200/90 shadow-sm space-y-4">
+            <div class="flex items-center justify-between gap-2">
+              <h2 class="text-base sm:text-lg font-bold text-slate-900">İmâm Nevevî Kampı</h2>
+              <span class="inline-flex items-center gap-1 text-xs font-bold px-2.5 py-1 rounded-full bg-emerald-100 text-emerald-800 border border-emerald-200">
+                ✨ Hak Ediyorsunuz
+              </span>
+            </div>
+
+            <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
+              21 Eylül – 6 Ekim 2026 tarihleri arasında düzenlenen <strong>İmâm Nevevî Kampı</strong>'nı istikrarlı bir şekilde tamamlayarak katılım sertifikasını almaya hak kazandınız.
+            </p>
+
+            <div class="bg-slate-50 rounded-xl p-3.5 border border-slate-200/70 space-y-2 text-xs">
+              <div class="flex justify-between">
+                <span class="text-slate-500">Katılımcı:</span>
+                <span class="font-bold text-slate-800">Emrullah Demir</span>
+              </div>
+              <div class="flex justify-between items-center">
+                <span class="text-slate-500">Doğrulama Kodu:</span>
+                <button id="copyCertCodeBtn" type="button" class="font-mono font-bold text-brand-700 hover:underline">
+                  SYR-1448-NVV-8942
+                </button>
+              </div>
+            </div>
+
+            <div class="flex flex-col sm:flex-row gap-2.5 pt-1">
+              <button id="downloadCertBtn" type="button" class="flex-1 py-2.5 px-4 rounded-xl bg-brand-600 hover:bg-brand-700 text-white font-bold text-xs sm:text-sm shadow-sm transition">
+                Sertifikayı İndir (PDF)
+              </button>
+              <button id="shareCertBtn" type="button" class="py-2.5 px-4 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold text-xs sm:text-sm transition">
+                Bağlantıyı Paylaş
+              </button>
+            </div>
+          </div>
+
+          <div class="lg:col-span-7 bg-white rounded-2xl p-3 sm:p-5 border border-slate-200/90 shadow-sm space-y-3">
+            <div class="flex items-center justify-between px-1">
+              <span class="text-xs font-bold text-slate-700">Orijinal Belge Önizlemesi</span>
+              <button id="btnZoomCertificate" type="button" class="text-xs font-semibold text-brand-600 hover:underline">
+                Tam Ekran Büyüt
+              </button>
+            </div>
+            <button id="certImagePreviewBtn" type="button" class="w-full rounded-xl overflow-hidden border border-stone-300 shadow-md block focus:outline-none">
+              <img
+                src="assets/img/sertifika-emrullah-demir.jpg"
+                alt="Emrullah Demir İmâm Nevevî Kampı Katılım Sertifikası"
+                class="w-full h-auto block"
+              />
+              <span class="sr-only">🔍 Yakınlaştırmak için tıkla</span>
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==================== SEKME 5: PROFİLİM ==================== -->
+      <section id="tab-profil" class="hidden space-y-5">
+        <div class="bg-white rounded-2xl p-4 sm:p-6 border border-slate-200/80 shadow-sm flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <div>
+            <h1 class="text-lg sm:text-xl font-bold text-slate-900">Profilim ve Hesap Bilgileri</h1>
+            <p class="text-xs sm:text-sm text-slate-500">Sertifika basımında kullanılan kişisel bilgilerinizi kontrol edin ve güncelleyin.</p>
+          </div>
+          <button id="toggleEditProfileBtn" type="button" class="px-4 py-2 rounded-xl text-xs font-bold bg-brand-600 text-white hover:bg-brand-700 transition self-start sm:self-center">
+            Bilgileri Düzenle
+          </button>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-5">
+          <div class="lg:col-span-2 bg-white rounded-2xl border border-slate-200/90 shadow-sm p-5 sm:p-6 space-y-5">
+            <div class="flex items-center gap-4 pb-4 border-b border-slate-100">
+              <div class="w-16 h-16 rounded-2xl bg-gradient-to-tr from-brand-700 to-brand-500 text-white font-extrabold text-xl flex items-center justify-center shadow-md">
+                ED
+              </div>
+              <div>
+                <h2 id="profileDisplayName" class="text-lg font-bold text-slate-900">Emrullah Demir</h2>
+                <p class="text-xs sm:text-sm text-slate-500">dmremrllh@hotmail.com</p>
+              </div>
+            </div>
+
+            <form id="profileForm" class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div>
+                <label class="block text-xs font-semibold text-slate-400 uppercase mb-1">Ad</label>
+                <input id="inpFirstName" type="text" value="Emrullah" disabled class="profile-input w-full px-3.5 py-2 rounded-xl border border-slate-200 bg-slate-50 text-slate-800 font-semibold text-sm" />
+              </div>
+              <div>
+                <label class="block text-xs font-semibold text-slate-400 uppercase mb-1">Soyad</label>
+                <input id="inpLastName" type="text" value="Demir" disabled class="profile-input w-full px-3.5 py-2 rounded-xl border border-slate-200 bg-slate-50 text-slate-800 font-semibold text-sm" />
+              </div>
+              <div>
+                <label class="block text-xs font-semibold text-slate-400 uppercase mb-1">Cinsiyet</label>
+                <input id="inpGender" type="text" value="Erkek" disabled class="profile-input w-full px-3.5 py-2 rounded-xl border border-slate-200 bg-slate-50 text-slate-800 font-semibold text-sm" />
+              </div>
+              <div>
+                <label class="block text-xs font-semibold text-slate-400 uppercase mb-1">Doğum Tarihi</label>
+                <input id="inpBirth" type="text" value="24.09.1990" disabled class="profile-input w-full px-3.5 py-2 rounded-xl border border-slate-200 bg-slate-50 text-slate-800 font-semibold text-sm" />
+              </div>
+              <div>
+                <label class="block text-xs font-semibold text-slate-400 uppercase mb-1">Şehir</label>
+                <input id="inpCity" type="text" value="Siirt" disabled class="profile-input w-full px-3.5 py-2 rounded-xl border border-slate-200 bg-slate-50 text-slate-800 font-semibold text-sm" />
+              </div>
+              <div>
+                <label class="block text-xs font-semibold text-slate-400 uppercase mb-1">Meslek</label>
+                <input id="inpJob" type="text" value="Öğretmen" disabled class="profile-input w-full px-3.5 py-2 rounded-xl border border-slate-200 bg-slate-50 text-slate-800 font-semibold text-sm" />
+              </div>
+              <div class="sm:col-span-2">
+                <label class="block text-xs font-semibold text-slate-400 uppercase mb-1">Telefon</label>
+                <input id="inpPhone" type="text" value="+90 543 727 34 70" disabled class="profile-input w-full px-3.5 py-2 rounded-xl border border-slate-200 bg-slate-50 text-slate-800 font-semibold text-sm" />
+              </div>
+
+              <div id="profileSaveActions" class="hidden sm:col-span-2 pt-2 flex justify-end gap-2">
+                <button id="cancelEditProfileBtn" type="button" class="px-4 py-2 rounded-xl text-xs font-semibold bg-slate-100 text-slate-700">İptal</button>
+                <button id="saveProfileBtn" type="submit" class="px-4 py-2 rounded-xl text-xs font-bold bg-emerald-600 text-white">Değişiklikleri Kaydet</button>
+              </div>
+            </form>
+          </div>
+
+          <div class="bg-white rounded-2xl border border-slate-200/90 shadow-sm p-5 space-y-4">
+            <h3 class="text-sm font-bold text-slate-900">Eğitim Özeti</h3>
+            <div class="space-y-3">
+              <div class="p-3.5 rounded-xl bg-emerald-50/70 border border-emerald-200/70 flex items-center justify-between">
+                <span class="text-xs font-medium text-emerald-900">Biten Kamp Başarısı</span>
+                <span class="text-base font-extrabold text-emerald-700">%100 (13/13)</span>
+              </div>
+              <div class="p-3.5 rounded-xl bg-brand-50/70 border border-brand-200/70 flex items-center justify-between">
+                <span class="text-xs font-medium text-brand-900">Aktif Kamp İlerlemesi</span>
+                <span class="text-base font-extrabold text-brand-700">%50 (5/10)</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- SEÇENEK A: AKILLI BAĞLAM DEĞİŞTİREN YÜZEN SABİT ALT BAR (JS ile doldurulur) -->
+    <nav id="mobileBottomNav" class="md:hidden fixed bottom-3 left-3 right-3 bg-white/95 backdrop-blur-lg border border-slate-200/90 rounded-2xl px-2 py-1.5 z-40 flex items-center justify-around shadow-2xl"></nav>
+
+  </div>
+
+  <!-- MODAL 1: DERS DETAY VE VİDEO ÖNİZLEME -->
+  <div id="lessonDetailModal" class="hidden fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+    <div class="bg-white rounded-2xl max-w-lg w-full p-5 sm:p-6 shadow-2xl border border-slate-200 space-y-4">
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <span id="modalLessonBadge" class="text-[11px] font-bold px-2.5 py-0.5 rounded-full bg-emerald-100 text-emerald-800">Ders & Yoklama Detayı</span>
+          <h3 id="modalLessonTitle" class="text-base sm:text-lg font-bold text-slate-900 mt-1.5">Ders Başlığı</h3>
+          <p id="modalLessonInstructor" class="text-xs sm:text-sm text-brand-700 font-semibold mt-0.5">Hoca Adı</p>
+        </div>
+        <button id="closeLessonModalBtn" type="button" class="p-1.5 rounded-lg text-slate-400 hover:text-slate-700 hover:bg-slate-100">✕</button>
+      </div>
+
+      <div class="bg-slate-50 rounded-xl p-3.5 border border-slate-200/80 text-xs space-y-1.5">
+        <div class="flex justify-between">
+          <span class="text-slate-500">Yayın Tarihi ve Süre:</span>
+          <span id="modalLessonDate" class="font-bold text-slate-800">21.09.2026</span>
+        </div>
+      </div>
+
+      <p id="modalLessonSummary" class="text-xs sm:text-sm text-slate-600 leading-relaxed"></p>
+
+      <div class="flex items-center justify-end gap-2 pt-2">
+        <button id="modalOpenPdfBtn" type="button" class="px-3.5 py-2 rounded-xl text-xs font-semibold bg-brand-50 text-brand-700 hover:bg-brand-100">
+          📖 Ders Notu Kitapçığına Git
+        </button>
+        <button id="modalDoneBtn" type="button" class="px-4 py-2 rounded-xl text-xs font-bold bg-slate-900 text-white hover:bg-slate-800">
+          Kapat
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL 2: SERTİFİKA TAM EKRAN BÜYÜTEÇ -->
+  <div id="certLightboxModal" class="hidden fixed inset-0 bg-black/85 backdrop-blur-sm z-50 flex flex-col items-center justify-center p-4">
+    <div class="max-w-4xl w-full flex items-center justify-between text-white mb-3">
+      <span class="text-sm font-bold">Emrullah Demir — İmâm Nevevî Kampı Katılım Sertifikası</span>
+      <button id="closeCertLightboxBtn" type="button" class="px-3 py-1.5 rounded-lg bg-white/15 hover:bg-white/25 text-xs font-bold">✕ Kapat</button>
+    </div>
+    <div class="max-w-4xl w-full rounded-2xl overflow-hidden shadow-2xl border border-white/20">
+      <img src="assets/img/sertifika-emrullah-demir.jpg" alt="Tam Ekran Sertifika" class="w-full h-auto block" />
+    </div>
+  </div>
+
+  <!-- MODAL 3: GITHUB KLASÖR MİMARİSİ & CANLI VERİ EKLEME SİMÜLATÖRÜ -->
+  <div id="adminDataModal" class="hidden fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+    <div class="bg-white rounded-2xl max-w-2xl w-full p-5 sm:p-6 shadow-2xl border border-slate-200 max-h-[88vh] flex flex-col space-y-4">
+      <div class="flex items-center justify-between pb-3 border-b border-slate-200">
+        <div>
+          <h3 class="text-base sm:text-lg font-bold text-slate-900">📁 GitHub Klasör Yapısı & Veri Yönetimi</h3>
+          <p class="text-xs text-slate-500">Veriler index.html içinde değil, ayrı klasör ve veri dosyalarında tutulur</p>
+        </div>
+        <button id="closeAdminModalBtn" type="button" class="p-1.5 rounded-lg text-slate-400 hover:text-slate-700 hover:bg-slate-100">✕</button>
+      </div>
+
+      <div class="overflow-y-auto space-y-4 pr-1 text-xs sm:text-sm">
+        <div class="bg-slate-900 text-emerald-300 font-mono text-xs p-4 rounded-xl leading-relaxed overflow-x-auto">
+e-medrese-github/
+├── index.html                  # Sadece sayfa iskeleti
+├── css/
+│   └── style.css               # Aktif (Yeşil) ve Biten (Arşiv/Bronz) kamp stilleri
+├── data/
+│   ├── camps.js                # Aktif (İmâm Gazâlî) & Biten (İmâm Nevevî) kamplar
+│   ├── lessons.js              # Kamplara göre ayrılmış ders ve yoklama listesi
+│   ├── announcements.js        # Kamp duyuruları ve genel duyurular
+│   └── user.js                 # Öğrenci profil verileri
+├── js/
+│   └── app.js                  # Kamp Odası ve Seçenek A Akıllı Alt Bar mantığı
+└── assets/img/                 # logo.svg, kamp kapakları ve sertifika görseli
+        </div>
+
+        <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-3">
+          <h4 class="font-bold text-slate-900 text-sm">Canlı Test: Yeni Duyuru Gönder veya Aktif Kampı Filtrele</h4>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div>
+              <label class="block text-xs font-semibold text-slate-500 mb-1">Duyuru Başlığı</label>
+              <input id="adminNewAnnTitle" type="text" value="7. Ders (İmâm Gazâlî ve Kudüs Bilinci) Hazırlık Notları" class="w-full px-3 py-2 rounded-lg border border-slate-300 bg-white text-xs font-medium" />
+            </div>
+            <div>
+              <label class="block text-xs font-semibold text-slate-500 mb-1">İlgili Kamp</label>
+              <select id="adminNewAnnCat" class="w-full px-3 py-2 rounded-lg border border-slate-300 bg-white text-xs font-medium">
+                <option value="İmâm Gazâlî Kampı">İmâm Gazâlî Kampı (Aktif)</option>
+                <option value="İmâm Nevevî Kampı">İmâm Nevevî Kampı (Biten)</option>
+              </select>
+            </div>
+            <div class="sm:col-span-2">
+              <label class="block text-xs font-semibold text-slate-500 mb-1">Duyuru Açıklaması</label>
+              <input id="adminNewAnnBody" type="text" value="Perşembe akşamı yapılacak dersimizin ön okuma metinleri kamp odasına yüklenmiştir." class="w-full px-3 py-2 rounded-lg border border-slate-300 bg-white text-xs font-medium" />
+            </div>
+          </div>
+          <div class="flex flex-wrap items-center justify-end gap-2 pt-1">
+            <button id="btnAdminPublishAnn" type="button" class="px-3.5 py-2 rounded-xl bg-brand-600 hover:bg-brand-700 text-white font-bold text-xs transition">
+              + Duyuruyu Yayınla
+            </button>
+            <button id="btnAdminPublishCamp" type="button" class="px-3.5 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs transition">
+              🟢 Aktif Kampı Göster (İmâm Gazâlî)
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL 4: NELER DEĞİŞTİ? -->
+  <div id="fixesComparisonModal" class="hidden fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+    <div class="bg-white rounded-2xl max-w-2xl w-full p-5 sm:p-6 shadow-2xl border border-slate-200 max-h-[85vh] flex flex-col">
+      <div class="flex items-center justify-between pb-3 border-b border-slate-200">
+        <h3 class="text-base sm:text-lg font-bold text-slate-900">Yapılan Mimari & Görsel İyileştirmeler</h3>
+        <button id="closeFixesModalBtn" type="button" class="p-1.5 rounded-lg text-slate-400 hover:text-slate-700">✕</button>
+      </div>
+      <div class="overflow-y-auto py-4 space-y-3 text-xs sm:text-sm">
+        <div class="p-3.5 rounded-xl bg-emerald-50 border border-emerald-200">
+          <p class="font-bold text-emerald-950">1. Aktif ve Süresi Biten Kamplar Renkleriyle Ayrıldı</p>
+          <p class="text-emerald-800 mt-0.5">Devam eden kamp (İmâm Gazâlî Kampı) canlı yeşil çerçeve ve rozetle, süresi biten kamp (İmâm Nevevî Kampı) ise arşiv/bronz çerçeveyle ayrıldı.</p>
+        </div>
+        <div class="p-3.5 rounded-xl bg-amber-50 border border-amber-200">
+          <p class="font-bold text-amber-950">2. Kamp Odası ve Seçenek A Akıllı Sabit Alt Bar</p>
+          <p class="text-amber-800 mt-0.5">Herhangi bir kampa tıklandığında o kampın Dersler, Yoklamalar, Duyurular ve Sertifika odası açılır; alttaki sabit bar da otomatik olarak o kampın menüsüne dönüşür.</p>
+        </div>
+      </div>
+      <div class="pt-3 border-t border-slate-200 flex justify-end">
+        <button id="ackFixesModalBtn" type="button" class="px-4 py-2 rounded-xl text-xs font-bold bg-brand-600 text-white">Anlaşıldı, Önizlemeye Dön</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- TOAST BİLDİRİMİ -->
+  <div id="toastNotification" class="hidden fixed bottom-20 md:bottom-6 right-4 sm:right-6 bg-slate-900 text-white px-4 py-3 rounded-xl shadow-xl border border-slate-700 text-xs sm:text-sm font-medium flex items-center gap-2.5 z-50">
+    <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+    <span id="toastMessageText">İşlem tamamlandı.</span>
+  </div>
+
+  <!-- MODÜLER VERİ VE UYGULAMA DOSYALARI (GitHub Klasör Yapısı) -->
+  <script src="data/camps.js"></script>
+  <script src="data/lessons.js"></script>
+  <script src="data/announcements.js"></script>
+  <script src="data/user.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,151 @@
+/* ==========================================================================
+   css/style.css
+   e-Medrese - Siyer TV Tema, Aktif/Biten Kamp Kartları ve Sabit Alt Bar Stilleri
+   ========================================================================== */
+
+:root, [data-theme="amber"] {
+  --brand-50: #fdf8f0;
+  --brand-100: #faecd8;
+  --brand-200: #f3d5ad;
+  --brand-300: #ebb87a;
+  --brand-400: #e19646;
+  --brand-500: #c97724;
+  --brand-600: #a85b18;
+  --brand-700: #874415;
+  --brand-800: #6e3716;
+  --brand-900: #5b2e14;
+  --bg-page: #f9f6f1;
+}
+
+[data-theme="purple"] {
+  --brand-50: #f5f0ff;
+  --brand-100: #ede4ff;
+  --brand-200: #dccbff;
+  --brand-300: #c3a3ff;
+  --brand-400: #a470ff;
+  --brand-500: #843dff;
+  --brand-600: #7422f7;
+  --brand-700: #6414e0;
+  --brand-800: #5312b8;
+  --brand-900: #451196;
+  --bg-page: #f8f7fc;
+}
+
+[data-theme="dark"] {
+  --brand-50: #29221c;
+  --brand-100: #382d23;
+  --brand-200: #52402f;
+  --brand-300: #8c6a46;
+  --brand-400: #c79255;
+  --brand-500: #d99b52;
+  --brand-600: #c47f33;
+  --brand-700: #e3a864;
+  --brand-800: #423222;
+  --brand-900: #f5d0a6;
+  --bg-page: #0f141c;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  background-color: var(--bg-page);
+  color: #1e1b2e;
+  overflow-x: hidden;
+  transition: background-color 0.25s ease, color 0.25s ease;
+}
+
+/* Gece Modu Uyumluluğu */
+[data-theme="dark"] body {
+  color: #f1f5f9;
+}
+[data-theme="dark"] .bg-white {
+  background-color: #18202c !important;
+  border-color: #283244 !important;
+  color: #f1f5f9 !important;
+}
+[data-theme="dark"] .bg-white\/95 {
+  background-color: rgba(24, 32, 44, 0.95) !important;
+  border-color: #283244 !important;
+}
+[data-theme="dark"] .bg-slate-50,
+[data-theme="dark"] .bg-slate-50\/90,
+[data-theme="dark"] .bg-slate-50\/50,
+[data-theme="dark"] .bg-slate-100,
+[data-theme="dark"] .bg-slate-100\/80,
+[data-theme="dark"] .bg-stone-100\/80 {
+  background-color: #202938 !important;
+  border-color: #2e3b4e !important;
+  color: #cbd5e1 !important;
+}
+[data-theme="dark"] .text-slate-900,
+[data-theme="dark"] .text-slate-800 {
+  color: #f8fafc !important;
+}
+[data-theme="dark"] .text-slate-700,
+[data-theme="dark"] .text-slate-600,
+[data-theme="dark"] .text-slate-500 {
+  color: #94a3b8 !important;
+}
+[data-theme="dark"] .divide-slate-100 > :not([hidden]) ~ :not([hidden]),
+[data-theme="dark"] .border-slate-100,
+[data-theme="dark"] .border-slate-200,
+[data-theme="dark"] .border-slate-200\/80,
+[data-theme="dark"] .border-slate-200\/90 {
+  border-color: #283244 !important;
+}
+
+/* Aktif Kamp ve Süresi Biten Kamp Kartlarının Görsel Ayrımı */
+.camp-card-active {
+  border-top: 5px solid #10b981 !important;
+  box-shadow: 0 10px 30px -10px rgba(16, 185, 129, 0.18);
+}
+
+.camp-card-completed {
+  border-top: 5px solid #78716c !important;
+  background-color: #faf9f6;
+}
+
+[data-theme="dark"] .camp-card-completed {
+  background-color: #161d28 !important;
+}
+
+.camp-card-completed .camp-thumb-img {
+  filter: saturate(0.82) contrast(1.03);
+}
+
+/* Skeleton Shimmer */
+.skeleton-shimmer {
+  background: linear-gradient(90deg, #f1eff8 25%, #e5e0f5 50%, #f1eff8 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.2s infinite;
+}
+@keyframes shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+/* Özel Kaydırma Çubuğu */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #f1eff8;
+}
+::-webkit-scrollbar-thumb {
+  background: #c97724;
+  border-radius: 9999px;
+}
+
+/* Mobil Simülatör Çerçevesi */
+.mobile-simulator-frame {
+  max-width: 400px;
+  height: 740px;
+  margin: 1rem auto;
+  border: 10px solid #1e1b2e;
+  border-radius: 2.5rem;
+  box-shadow: 0 25px 50px -12px rgba(30, 27, 46, 0.45);
+  background: var(--bg-page);
+  overflow-y: auto;
+  overflow-x: hidden;
+  position: relative;
+}

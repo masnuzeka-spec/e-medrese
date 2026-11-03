@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" fill="none">
+  <defs>
+    <linearGradient id="bgGrad" x1="0" y1="0" x2="120" y2="120" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#5b2e14"/>
+      <stop offset="50%" stop-color="#3d1e0d"/>
+      <stop offset="100%" stop-color="#241107"/>
+    </linearGradient>
+    <linearGradient id="goldGrad" x1="20" y1="15" x2="100" y2="105" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#f7d794"/>
+      <stop offset="50%" stop-color="#e19646"/>
+      <stop offset="100%" stop-color="#b86b1b"/>
+    </linearGradient>
+  </defs>
+  <!-- Outer Rounded Emblem -->
+  <rect x="4" y="4" width="112" height="112" rx="28" fill="url(#bgGrad)" stroke="url(#goldGrad)" stroke-width="3.5"/>
+  <!-- Inner Ornamental Arch (Mihrab / Kubbe) -->
+  <path d="M26 92V56C26 35 42 22 60 16C78 22 94 35 94 56V92" stroke="url(#goldGrad)" stroke-width="2.5" stroke-linecap="round" opacity="0.85"/>
+  <!-- Dome Rib Lines -->
+  <path d="M60 16V48M60 16C48 26 42 38 42 52M60 16C72 26 78 38 78 52" stroke="url(#goldGrad)" stroke-width="1.4" opacity="0.45"/>
+  <!-- Crescent Finial on Top -->
+  <circle cx="60" cy="13" r="2.5" fill="#f7d794"/>
+  <!-- Open Book & Rahle (Lectern) -->
+  <path d="M32 62C42 60 52 63 60 68C68 63 78 60 88 62V84C78 82 68 85 60 90C52 85 42 82 32 84V62Z" fill="url(#goldGrad)"/>
+  <path d="M60 68V90" stroke="#3d1e0d" stroke-width="2.2"/>
+  <!-- Rahle X Base -->
+  <path d="M44 92L60 83L76 92M48 98L60 89L72 98" stroke="url(#goldGrad)" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
