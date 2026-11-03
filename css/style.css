@@ -1,5 +1,5 @@
-:root{--bg:#f6f1e7;--act:#2f7d4f;--fin:#8a5a2b;--card:#fffdf8;--ink:#2b1d14;--mute:#7a6755;--brand:#5a3320;--copper:#c47a3e;--line:#e4d8c4;--ok:#2f7d4f;--warn:#b7791f}
-:root[data-theme=dark]{--bg:#3a2e26;--card:#4a3b31;--ink:#f6eee2;--mute:#cdbca6;--brand:#f0b883;--copper:#e39a58;--line:#665443;--ok:#7bd3a0;--warn:#f0c46a;--act:#4fb67e;--fin:#d09a5c}
+:root{--bg:#f3f0e6;--card:#fffefa;--ink:#1d2a26;--mute:#6b7771;--brand:#0f4a40;--copper:#d99a2b;--line:#ddd8c6;--ok:#2f7d4f;--warn:#b7791f;--act:#1f8a5b;--fin:#8a5a2b}
+:root[data-theme=dark]{--bg:#0f2420;--card:#17332d;--ink:#eef3ee;--mute:#a8bdb5;--brand:#f0b955;--copper:#f0b955;--line:#2c4f46;--ok:#7bd3a0;--warn:#f0c46a;--act:#4fcf95;--fin:#d9a066}
 *{box-sizing:border-box}
 html,body{margin:0}
 body{background:var(--bg);color:var(--ink);font:16px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif;padding-bottom:env(safe-area-inset-bottom)}
@@ -78,3 +78,23 @@ h2::before{content:"";display:inline-block;width:10px;height:10px;border-radius:
 .stats b{font-size:26px;color:var(--brand)}
 .row.top2{align-items:center}
 @media(min-width:768px){.pf,.stats,#app>h2,#app>.row{max-width:640px}}
+
+.top{background:#0f3d36;border-bottom:3px solid #d99a2b}
+.brand{color:#f6d28a}
+.top .icon{background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.25);color:#fff}
+.top .av{background:#d99a2b;color:#10302a}
+.tag{position:static;display:inline-block;margin-bottom:8px}
+.go{display:inline-block;margin-top:12px;font-weight:800;color:var(--brand)}
+.card.fin .go{color:var(--fin)}
+.desc{display:none;margin:10px 0 4px;color:var(--mute);font-size:14px}
+.tabs a.on{background:#0f4a40;color:#f6d28a}
+:root[data-theme=dark] .tabs a.on{background:#d99a2b;color:#10302a}
+.btn{background:#0f4a40;color:#f6d28a}
+@media(min-width:768px){
+ .grid{grid-template-columns:1fr;gap:20px}
+ .card{flex-direction:row;min-height:240px}
+ .card .im{width:44%;flex:none}
+ .card img{height:100%;min-height:240px}
+ .card .b{display:flex;flex-direction:column;justify-content:center;padding:24px 32px;flex:1}
+ .desc{display:block}
+}

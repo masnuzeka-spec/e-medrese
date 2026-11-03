@@ -7,10 +7,12 @@ let t;try{t=localStorage.getItem('theme')}catch(x){}
 theme(t||'light');
 btn.onclick=()=>theme(document.documentElement.dataset.theme==='dark'?'light':'dark');
 
-const card=c=>`<a class="card ${c.status==='active'?'act':'fin'}" href="#/camp/${c.id}/dersler"><div class="im"><img src="${e(c.image)}" alt=""><span class="tag">${c.status==='active'?'● Devam Ediyor':'✓ Tamamlandı'}</span></div>
-<div class="b"><h3>${e(c.title)}</h3><div class="mute">${e(c.dateRange)}</div>
+const card=c=>`<a class="card ${c.status==='active'?'act':'fin'}" href="#/camp/${c.id}/dersler"><div class="im"><img src="${e(c.image)}" alt=""></div>
+<div class="b"><span class="tag">${c.status==='active'?'● Devam Ediyor':'✓ Tamamlandı'}</span><h3>${e(c.title)}</h3><div class="mute">${e(c.dateRange)}</div>
+<p class="desc">${e(c.description)}</p>
 <div class="bar2"><i style="width:${+c.progressPercent||0}%"></i></div>
-<div class="mute">${c.completedLessons}/${c.totalLessons} ders${c.certificateEarned?' • 🎓 Sertifika':''}</div></div></a>`;
+<div class="mute">${c.completedLessons}/${c.totalLessons} ders${c.certificateEarned?' • 🎓 Sertifika hazır':''}</div>
+<span class="go">${c.status==='active'?'Kampa Git':'Kampı Görüntüle'} →</span></div></a>`;
 
 function home(){
  const joined=C.filter(c=>c.joined),act=joined.filter(c=>c.status==='active'),done=joined.filter(c=>c.status==='completed');
