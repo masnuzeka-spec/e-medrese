@@ -7,8 +7,8 @@
 window.EMEDRESE_CAMPS = [
   {
     id: "imam-gazali",
-    title: "İmâm Gazâlî Kampı",
-    subtitle: "Büyüklerin Ayak İzleri • İhyâ ve Hakikat Arayışı",
+    title: "Büyüklerin Ayak İzleri: İmâm Gazâlî Kampı",
+    subtitle: "İhyâ ve Hakikat Arayışı",
     status: "active", // "active" = Devam Eden Kamp (Yeşil/Canlı Tema) | "completed" = Süresi Biten Kamp (Bronz/Arşiv Tema)
     statusLabel: "Devam Ediyor • Yoklama Açık",
     joined: true,

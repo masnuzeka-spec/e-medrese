@@ -1,151 +1,50 @@
-/* ==========================================================================
-   css/style.css
-   e-Medrese - Siyer TV Tema, Aktif/Biten Kamp Kartları ve Sabit Alt Bar Stilleri
-   ========================================================================== */
-
-:root, [data-theme="amber"] {
-  --brand-50: #fdf8f0;
-  --brand-100: #faecd8;
-  --brand-200: #f3d5ad;
-  --brand-300: #ebb87a;
-  --brand-400: #e19646;
-  --brand-500: #c97724;
-  --brand-600: #a85b18;
-  --brand-700: #874415;
-  --brand-800: #6e3716;
-  --brand-900: #5b2e14;
-  --bg-page: #f9f6f1;
+:root{--bg:#f6f1e7;--card:#fffdf8;--ink:#2b1d14;--mute:#7a6755;--brand:#5a3320;--copper:#c47a3e;--line:#e4d8c4;--ok:#2f7d4f;--warn:#b7791f}
+:root[data-theme=dark]{--bg:#16110d;--card:#221a14;--ink:#f1e8da;--mute:#b2a28d;--brand:#e0a06a;--copper:#d98b4a;--line:#3a2d22;--ok:#5cc08a;--warn:#e0b050}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--bg);color:var(--ink);font:16px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif;padding-bottom:env(safe-area-inset-bottom)}
+.wrap{max-width:960px;margin:0 auto;padding:0 16px}
+.top{position:sticky;top:0;z-index:20;background:var(--bg);border-bottom:1px solid var(--line);padding-top:env(safe-area-inset-top)}
+.bar{display:flex;align-items:center;justify-content:space-between;height:56px}
+.brand{display:flex;align-items:center;gap:10px;color:var(--brand);font-weight:800;text-decoration:none;font-size:18px}
+.brand img{width:30px;height:30px}
+.icon{border:1px solid var(--line);background:var(--card);border-radius:12px;width:40px;height:40px;font-size:18px;cursor:pointer}
+main{padding-top:20px;padding-bottom:96px}
+h1{font-size:22px;margin:0 0 4px;color:var(--brand)}
+h2{font-size:14px;letter-spacing:.08em;text-transform:uppercase;color:var(--mute);margin:28px 0 12px}
+.grid{display:grid;gap:14px;grid-template-columns:1fr}
+.card{display:flex;flex-direction:column;background:var(--card);border:1px solid var(--line);border-radius:18px;overflow:hidden;text-decoration:none;color:inherit;transition:transform .15s}
+.card:hover{transform:translateY(-2px)}
+.card img{width:100%;height:150px;object-fit:cover;background:var(--line)}
+.card .b{padding:14px 16px 16px}
+.card h3{margin:0 0 2px;font-size:17px;color:var(--brand)}
+.mute{color:var(--mute);font-size:14px}
+.bar2{height:8px;background:var(--line);border-radius:9px;margin:10px 0 4px;overflow:hidden}
+.bar2 i{display:block;height:100%;background:var(--copper)}
+.pill{display:inline-block;font-size:12px;font-weight:700;padding:3px 10px;border-radius:99px;background:var(--line);color:var(--brand)}
+.pill.ok{color:var(--ok)}.pill.warn{color:var(--warn)}
+.back{display:inline-block;margin-bottom:10px;color:var(--copper);text-decoration:none;font-weight:700}
+.tabs{display:grid;grid-template-columns:repeat(4,1fr);gap:4px;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:4px;margin:16px 0}
+.tabs a{text-align:center;padding:10px 4px;border-radius:12px;text-decoration:none;color:var(--mute);font-weight:700;font-size:13px}
+.tabs a b{display:block;font-size:18px}
+.tabs a.on{background:var(--brand);color:var(--bg)}
+.row{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px 14px;margin-bottom:10px}
+.row h4{margin:0 0 2px;font-size:15px}
+.row .top2{display:flex;justify-content:space-between;gap:10px;align-items:flex-start}
+.empty{text-align:center;padding:32px 16px;background:var(--card);border:1px dashed var(--line);border-radius:16px;color:var(--mute)}
+.cert{width:100%;border-radius:12px;border:1px solid var(--line);display:block}
+.btn{display:inline-block;margin-top:12px;background:var(--brand);color:var(--bg);padding:12px 20px;border-radius:12px;font-weight:700;text-decoration:none}
+.sheet{aspect-ratio:1.414;background:#fbf8f1;color:#2b1d14;border:10px double #6b3f25;outline:3px solid #6b3f25;outline-offset:-22px;text-align:center;display:flex;flex-direction:column;justify-content:center;align-items:center;padding:6%;container-type:inline-size}
+.sheet .c{font-size:5.5cqw;font-weight:900;color:#c47a3e;line-height:1.1}
+.sheet .k{letter-spacing:.35em;font-size:3.2cqw;margin:2cqw 0}
+.sheet .n{font:5.5cqw "Great Vibes","Brush Script MT",cursive;color:#6b3f25;margin:1cqw 0}
+.sheet p{font-size:1.9cqw;margin:0;max-width:80%}
+.sheet img{height:9cqw;margin-top:3cqw}
+@media(max-width:767px){
+ .tabs{position:fixed;left:8px;right:8px;bottom:calc(8px + env(safe-area-inset-bottom));margin:0;z-index:30;box-shadow:0 6px 24px rgba(0,0,0,.25)}
 }
-
-[data-theme="purple"] {
-  --brand-50: #f5f0ff;
-  --brand-100: #ede4ff;
-  --brand-200: #dccbff;
-  --brand-300: #c3a3ff;
-  --brand-400: #a470ff;
-  --brand-500: #843dff;
-  --brand-600: #7422f7;
-  --brand-700: #6414e0;
-  --brand-800: #5312b8;
-  --brand-900: #451196;
-  --bg-page: #f8f7fc;
-}
-
-[data-theme="dark"] {
-  --brand-50: #29221c;
-  --brand-100: #382d23;
-  --brand-200: #52402f;
-  --brand-300: #8c6a46;
-  --brand-400: #c79255;
-  --brand-500: #d99b52;
-  --brand-600: #c47f33;
-  --brand-700: #e3a864;
-  --brand-800: #423222;
-  --brand-900: #f5d0a6;
-  --bg-page: #0f141c;
-}
-
-body {
-  font-family: 'Inter', sans-serif;
-  background-color: var(--bg-page);
-  color: #1e1b2e;
-  overflow-x: hidden;
-  transition: background-color 0.25s ease, color 0.25s ease;
-}
-
-/* Gece Modu Uyumluluğu */
-[data-theme="dark"] body {
-  color: #f1f5f9;
-}
-[data-theme="dark"] .bg-white {
-  background-color: #18202c !important;
-  border-color: #283244 !important;
-  color: #f1f5f9 !important;
-}
-[data-theme="dark"] .bg-white\/95 {
-  background-color: rgba(24, 32, 44, 0.95) !important;
-  border-color: #283244 !important;
-}
-[data-theme="dark"] .bg-slate-50,
-[data-theme="dark"] .bg-slate-50\/90,
-[data-theme="dark"] .bg-slate-50\/50,
-[data-theme="dark"] .bg-slate-100,
-[data-theme="dark"] .bg-slate-100\/80,
-[data-theme="dark"] .bg-stone-100\/80 {
-  background-color: #202938 !important;
-  border-color: #2e3b4e !important;
-  color: #cbd5e1 !important;
-}
-[data-theme="dark"] .text-slate-900,
-[data-theme="dark"] .text-slate-800 {
-  color: #f8fafc !important;
-}
-[data-theme="dark"] .text-slate-700,
-[data-theme="dark"] .text-slate-600,
-[data-theme="dark"] .text-slate-500 {
-  color: #94a3b8 !important;
-}
-[data-theme="dark"] .divide-slate-100 > :not([hidden]) ~ :not([hidden]),
-[data-theme="dark"] .border-slate-100,
-[data-theme="dark"] .border-slate-200,
-[data-theme="dark"] .border-slate-200\/80,
-[data-theme="dark"] .border-slate-200\/90 {
-  border-color: #283244 !important;
-}
-
-/* Aktif Kamp ve Süresi Biten Kamp Kartlarının Görsel Ayrımı */
-.camp-card-active {
-  border-top: 5px solid #10b981 !important;
-  box-shadow: 0 10px 30px -10px rgba(16, 185, 129, 0.18);
-}
-
-.camp-card-completed {
-  border-top: 5px solid #78716c !important;
-  background-color: #faf9f6;
-}
-
-[data-theme="dark"] .camp-card-completed {
-  background-color: #161d28 !important;
-}
-
-.camp-card-completed .camp-thumb-img {
-  filter: saturate(0.82) contrast(1.03);
-}
-
-/* Skeleton Shimmer */
-.skeleton-shimmer {
-  background: linear-gradient(90deg, #f1eff8 25%, #e5e0f5 50%, #f1eff8 75%);
-  background-size: 200% 100%;
-  animation: shimmer 1.2s infinite;
-}
-@keyframes shimmer {
-  0% { background-position: 200% 0; }
-  100% { background-position: -200% 0; }
-}
-
-/* Özel Kaydırma Çubuğu */
-::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
-}
-::-webkit-scrollbar-track {
-  background: #f1eff8;
-}
-::-webkit-scrollbar-thumb {
-  background: #c97724;
-  border-radius: 9999px;
-}
-
-/* Mobil Simülatör Çerçevesi */
-.mobile-simulator-frame {
-  max-width: 400px;
-  height: 740px;
-  margin: 1rem auto;
-  border: 10px solid #1e1b2e;
-  border-radius: 2.5rem;
-  box-shadow: 0 25px 50px -12px rgba(30, 27, 46, 0.45);
-  background: var(--bg-page);
-  overflow-y: auto;
-  overflow-x: hidden;
-  position: relative;
+@media(min-width:768px){
+ .grid{grid-template-columns:repeat(2,1fr)}
+ h1{font-size:28px}
+ .tabs a{font-size:15px}.tabs a b{display:inline;margin-right:6px}
 }

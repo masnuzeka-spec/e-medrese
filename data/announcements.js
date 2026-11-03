@@ -13,7 +13,7 @@ window.EMEDRESE_ANNOUNCEMENTS = [
     date: "03.11.2026",
     isNew: true,
     actionText: "Yoklama Ekranına Git",
-    body: "Dr. Öğr. Üyesi Mesut Çakır hocamız ile gerçekleştirdiğimiz 6. dersin canlı yayın yoklaması açılmıştır. Üstteki yeşil banttan veya Yoklama sekmesinden onaylayabilirsiniz."
+    body: "Dr. Öğr. Üyesi Mesut Çakır hocamız ile gerçekleştirdiğimiz 6. dersin canlı yayın yoklaması açılmıştır. Yoklama sekmesinden takip edebilirsiniz."
   },
   {
     id: 202,
