@@ -4,19 +4,19 @@ const app=document.getElementById('app'),btn=document.getElementById('theme');
 const e=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 function theme(t){document.documentElement.dataset.theme=t;btn.textContent=t==='dark'?'☀️':'🌙';try{localStorage.setItem('theme',t)}catch(x){}}
 let t;try{t=localStorage.getItem('theme')}catch(x){}
-theme(t||(matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light'));
+theme(t||'light');
 btn.onclick=()=>theme(document.documentElement.dataset.theme==='dark'?'light':'dark');
 
-const card=c=>`<a class="card" href="#/camp/${c.id}/dersler"><img src="${e(c.image)}" alt="">
+const card=c=>`<a class="card ${c.status==='active'?'act':'fin'}" href="#/camp/${c.id}/dersler"><div class="im"><img src="${e(c.image)}" alt=""><span class="tag">${c.status==='active'?'● Devam Ediyor':'✓ Tamamlandı'}</span></div>
 <div class="b"><h3>${e(c.title)}</h3><div class="mute">${e(c.dateRange)}</div>
 <div class="bar2"><i style="width:${+c.progressPercent||0}%"></i></div>
 <div class="mute">${c.completedLessons}/${c.totalLessons} ders${c.certificateEarned?' • 🎓 Sertifika':''}</div></div></a>`;
 
 function home(){
  const joined=C.filter(c=>c.joined),act=joined.filter(c=>c.status==='active'),done=joined.filter(c=>c.status==='completed');
- app.innerHTML=`<h1>Selâmün aleyküm, ${e(U.firstName)}</h1><div class="mute">Kamplarınız</div>
- ${act.length?`<h2>Aktif Kamplar</h2><div class="grid">${act.map(card).join('')}</div>`:''}
- ${done.length?`<h2>Biten Kamplar</h2><div class="grid">${done.map(card).join('')}</div>`:''}
+ app.innerHTML=`<h1>Kamplarım</h1>
+ ${act.length?`<h2 class="a">Aktif Kamplar</h2><div class="grid">${act.map(card).join('')}</div>`:''}
+ ${done.length?`<h2 class="f">Biten Kamplar</h2><div class="grid">${done.map(card).join('')}</div>`:''}
  ${joined.length?'':'<div class="empty">Henüz bir kampa katılmadınız.</div>'}`;
 }
 
@@ -53,10 +53,19 @@ function camp(id,tab){
  <nav class="tabs">${tabs.map(x=>`<a href="#/camp/${id}/${x[0]}" class="${x[0]===tab?'on':''}"><b>${x[1]}</b>${x[2]}</a>`).join('')}</nav>${body}`;
 }
 
+function profil(){
+ const j=C.filter(c=>c.joined),sc=j.filter(c=>c.certificateEarned).length;
+ const rows=[['E-posta',U.email],['Telefon',U.phone],['Şehir',U.city],['Meslek',U.profession],['Cinsiyet',U.gender],['Doğum tarihi',U.birthDate]];
+ app.innerHTML=`<a class="back" href="#/">← Kamplarım</a>
+ <div class="pf"><div class="avb">${e(U.initials)}</div><div><h1>${e(U.firstName)} ${e(U.lastName)}</h1><div class="mute">${e(U.profession)} • ${e(U.city)}</div></div></div>
+ <div class="stats"><div class="row"><b>${j.length}</b><div class="mute">Katıldığım kamp</div></div><div class="row"><b>${sc}</b><div class="mute">Sertifika</div></div></div>
+ <h2>Bilgilerim</h2>${rows.map(r=>`<div class="row top2"><span class="mute">${r[0]}</span><b>${e(r[1])}</b></div>`).join('')}`;
+}
 function route(){
  const m=location.hash.match(/^#\/camp\/([^/]+)\/?([^/]*)/);
- m?camp(m[1],m[2]||'dersler'):home();
+ m?camp(m[1],m[2]||'dersler'):location.hash==='#/profil'?profil():home();
  scrollTo(0,0);
 }
+document.getElementById('prof').textContent=U.initials;
 addEventListener('hashchange',route);route();
 })();
