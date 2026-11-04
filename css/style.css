@@ -1,100 +1,197 @@
-:root{--bg:#f3f0e6;--card:#fffefa;--ink:#1d2a26;--mute:#6b7771;--brand:#0f4a40;--copper:#d99a2b;--line:#ddd8c6;--ok:#2f7d4f;--warn:#b7791f;--act:#1f8a5b;--fin:#8a5a2b}
-:root[data-theme=dark]{--bg:#0f2420;--card:#17332d;--ink:#eef3ee;--mute:#a8bdb5;--brand:#f0b955;--copper:#f0b955;--line:#2c4f46;--ok:#7bd3a0;--warn:#f0c46a;--act:#4fcf95;--fin:#d9a066}
-*{box-sizing:border-box}
-html,body{margin:0}
-body{background:var(--bg);color:var(--ink);font:16px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif;padding-bottom:env(safe-area-inset-bottom)}
-.wrap{max-width:1200px;margin:0 auto;padding:0 16px}
-.top{position:sticky;top:0;z-index:20;background:var(--bg);border-bottom:1px solid var(--line);padding-top:env(safe-area-inset-top)}
-.bar{display:flex;align-items:center;justify-content:space-between;height:56px}
-.brand{display:flex;align-items:center;gap:10px;color:var(--brand);font-weight:800;text-decoration:none;font-size:18px}
-.brand img{width:30px;height:30px}
-.icon{border:1px solid var(--line);background:var(--card);border-radius:12px;width:40px;height:40px;font-size:18px;cursor:pointer}
-main{padding-top:20px;padding-bottom:96px}
-h1{font-size:22px;margin:0 0 4px;color:var(--brand)}
-h2{font-size:14px;letter-spacing:.08em;text-transform:uppercase;color:var(--mute);margin:28px 0 12px}
-.grid{display:grid;gap:14px;grid-template-columns:1fr}
-.card{display:flex;flex-direction:column;background:var(--card);border:1px solid var(--line);border-radius:18px;overflow:hidden;text-decoration:none;color:inherit;transition:transform .15s}
-.card:hover{transform:translateY(-2px)}
-.card img{width:100%;height:150px;object-fit:cover;background:var(--line)}
-.card .b{padding:14px 16px 16px}
-.card h3{margin:0 0 2px;font-size:17px;color:var(--brand)}
-.mute{color:var(--mute);font-size:14px}
-.bar2{height:8px;background:var(--line);border-radius:9px;margin:10px 0 4px;overflow:hidden}
-.bar2 i{display:block;height:100%;background:var(--copper)}
-.pill{display:inline-block;font-size:12px;font-weight:700;padding:3px 10px;border-radius:99px;background:var(--line);color:var(--brand)}
-.pill.ok{color:var(--ok)}.pill.warn{color:var(--warn)}
-.back{display:inline-block;margin-bottom:10px;color:var(--copper);text-decoration:none;font-weight:700}
-.tabs{display:grid;grid-template-columns:repeat(4,1fr);gap:4px;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:4px;margin:16px 0}
-.tabs a{text-align:center;padding:10px 4px;border-radius:12px;text-decoration:none;color:var(--mute);font-weight:700;font-size:13px}
-.tabs a b{display:block;font-size:18px}
-.tabs a.on{background:var(--brand);color:var(--bg)}
-.row{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px 14px;margin-bottom:10px}
-.row h4{margin:0 0 2px;font-size:15px}
-.row .top2{display:flex;justify-content:space-between;gap:10px;align-items:flex-start}
-.empty{text-align:center;padding:32px 16px;background:var(--card);border:1px dashed var(--line);border-radius:16px;color:var(--mute)}
-.cert{width:100%;border-radius:12px;border:1px solid var(--line);display:block}
-.btn{display:inline-block;margin-top:12px;background:var(--brand);color:var(--bg);padding:12px 20px;border-radius:12px;font-weight:700;text-decoration:none}
-.sheet{aspect-ratio:1.414;background:#fbf8f1;color:#2b1d14;border:10px double #6b3f25;outline:3px solid #6b3f25;outline-offset:-22px;text-align:center;display:flex;flex-direction:column;justify-content:center;align-items:center;padding:6%;container-type:inline-size}
-.sheet .c{font-size:5.5cqw;font-weight:900;color:#c47a3e;line-height:1.1}
-.sheet .k{letter-spacing:.35em;font-size:3.2cqw;margin:2cqw 0}
-.sheet .n{font:5.5cqw "Great Vibes","Brush Script MT",cursive;color:#6b3f25;margin:1cqw 0}
-.sheet p{font-size:1.9cqw;margin:0;max-width:80%}
-.sheet img{height:9cqw;margin-top:3cqw}
-@media(max-width:767px){
- .tabs{position:fixed;left:8px;right:8px;bottom:calc(8px + env(safe-area-inset-bottom));margin:0;z-index:30;box-shadow:0 6px 24px rgba(0,0,0,.25)}
-}
-@media(min-width:768px){
- .grid{grid-template-columns:repeat(2,1fr)}
- h1{font-size:28px}
- .tabs a{font-size:15px}.tabs a b{display:inline;margin-right:6px}
+/* ==========================================================================
+   css/style.css
+   e-Medrese - Siyer TV | Zümrüt-Altın-Kahve Teması & Sabit Alt Kontrol Barı
+   ========================================================================== */
+
+:root {
+  --header-bg: #133b2e;
+  --header-border: #c8962e;
+  --gold-accent: #d8a634;
+  --bg-page: #f4efe4;
+  --card-bg: #ffffff;
+  --card-border: #e5dec9;
+  --text-main: #133b2e;
+  --text-body: #4a5550;
+  --text-muted: #78827d;
+  --active-green: #1f7a53;
+  --completed-brown: #7c4f20;
+  --track-bg: #e6e0d2;
 }
 
-.card{border-top:5px solid var(--fin)}
-.card.act{border-top-color:var(--act)}
-.card.act .bar2 i{background:var(--act)}
-.card.fin .bar2 i{background:var(--fin)}
-.card.fin .im img{filter:saturate(.7)}
-.im{position:relative}
-.tag{position:absolute;left:12px;top:12px;font-size:12px;font-weight:800;color:#fff;padding:4px 12px;border-radius:99px;background:var(--fin)}
-.card.act .tag{background:var(--act)}
-h2.a{color:var(--act)}h2.f{color:var(--fin)}
-h2::before{content:"";display:inline-block;width:10px;height:10px;border-radius:50%;background:currentColor;margin-right:8px}
-@media(min-width:768px){
- .wrap{padding:0 40px}
- .bar{height:68px}
- .grid{grid-template-columns:repeat(2,1fr);gap:24px}
- .card img{height:220px}
- .card h3{font-size:20px}
- main{padding-bottom:48px}
- .tabs{max-width:640px}
+[data-theme="dark"] {
+  --header-bg: #0b221a;
+  --header-border: #b88624;
+  --gold-accent: #e0b042;
+  --bg-page: #0d1915;
+  --card-bg: #142620;
+  --card-border: #233d34;
+  --text-main: #f1f5f2;
+  --text-body: #cbd5d0;
+  --text-muted: #8ca399;
+  --active-green: #269968;
+  --completed-brown: #9c6731;
+  --track-bg: #233830;
 }
-@media(min-width:1100px){.grid{grid-template-columns:repeat(3,1fr)}}
 
-.acts{display:flex;gap:8px;align-items:center}
-.av{display:flex;align-items:center;justify-content:center;background:var(--brand);color:var(--bg);font-weight:800;font-size:14px;text-decoration:none}
-.pf{display:flex;gap:16px;align-items:center;margin:8px 0 16px}
-.avb{width:72px;height:72px;border-radius:50%;background:var(--brand);color:var(--bg);display:flex;align-items:center;justify-content:center;font-size:26px;font-weight:800;flex:none}
-.stats{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-.stats b{font-size:26px;color:var(--brand)}
-.row.top2{align-items:center}
-@media(min-width:768px){.pf,.stats,#app>h2,#app>.row{max-width:640px}}
+* {
+  box-sizing: border-box;
+}
 
-.top{background:#0f3d36;border-bottom:3px solid #d99a2b}
-.brand{color:#f6d28a}
-.top .icon{background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.25);color:#fff}
-.top .av{background:#d99a2b;color:#10302a}
-.tag{position:static;display:inline-block;margin-bottom:8px}
-.go{display:inline-block;margin-top:12px;font-weight:800;color:var(--brand)}
-.card.fin .go{color:var(--fin)}
-.desc{display:none;margin:10px 0 4px;color:var(--mute);font-size:14px}
-.tabs a.on{background:#0f4a40;color:#f6d28a}
-:root[data-theme=dark] .tabs a.on{background:#d99a2b;color:#10302a}
-.btn{background:#0f4a40;color:#f6d28a}
-@media(min-width:768px){
- .grid{grid-template-columns:1fr;gap:20px}
- .card{flex-direction:row;min-height:240px}
- .card .im{width:44%;flex:none}
- .card img{height:100%;min-height:240px}
- .card .b{display:flex;flex-direction:column;justify-content:center;padding:24px 32px;flex:1}
- .desc{display:block}
+html, body {
+  height: 100dvh;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  background-color: var(--bg-page);
+  color: var(--text-body);
+  -webkit-font-smoothing: antialiased;
+  transition: background-color 0.25s ease, color 0.25s ease;
+}
+
+.font-heading {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  letter-spacing: -0.02em;
+}
+
+.font-arabic {
+  font-family: 'Amiri', serif;
+}
+
+.font-script {
+  font-family: 'Great Vibes', cursive;
+}
+
+/* Üst Header */
+.emedrese-header {
+  background-color: var(--header-bg);
+  border-bottom: 2px solid var(--header-border);
+}
+
+/* Sabit Alt Kontrol Barı (Hem Mobil Hem Masaüstü Uyumlu) */
+.emedrese-bottom-dock {
+  background-color: var(--header-bg);
+  border-top: 2px solid var(--header-border);
+}
+
+/* Kart Yüzeyleri */
+.emedrese-card {
+  background-color: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 1.15rem;
+  box-shadow: 0 6px 22px -6px rgba(19, 59, 46, 0.07);
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.25s ease;
+}
+
+.emedrese-card-hover:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 14px 30px -8px rgba(19, 59, 46, 0.13);
+}
+
+/* Aktif Kamp Kartı (Zümrüt Yeşili Üst Çizgi) */
+.camp-card-active {
+  border-top: 4px solid var(--active-green) !important;
+}
+
+/* Biten Kamp Kartı (Sıcak Kahve Üst Çizgi) */
+.camp-card-completed {
+  border-top: 4px solid var(--completed-brown) !important;
+}
+
+.status-bar-active {
+  background-color: var(--active-green);
+  color: #ffffff;
+}
+
+.status-bar-completed {
+  background-color: var(--completed-brown);
+  color: #ffffff;
+}
+
+.progress-track {
+  background-color: var(--track-bg);
+}
+
+.progress-fill-active {
+  background-color: var(--active-green);
+}
+
+.progress-fill-completed {
+  background-color: var(--completed-brown);
+}
+
+.text-heading-main {
+  color: var(--text-main);
+}
+
+.text-body-main {
+  color: var(--text-body);
+}
+
+.text-muted-main {
+  color: var(--text-muted);
+}
+
+/* Koyu Mod Yardımcı Dönüşümler */
+[data-theme="dark"] .bg-white,
+[data-theme="dark"] .bg-stone-50,
+[data-theme="dark"] .bg-amber-50\/40 {
+  background-color: #142620 !important;
+  border-color: #233d34 !important;
+  color: #e2ebe7 !important;
+}
+
+[data-theme="dark"] .bg-stone-100,
+[data-theme="dark"] .bg-slate-50,
+[data-theme="dark"] .bg-slate-100 {
+  background-color: #1b332b !important;
+  border-color: #29493e !important;
+  color: #d1ded8 !important;
+}
+
+[data-theme="dark"] .text-slate-900,
+[data-theme="dark"] .text-slate-800,
+[data-theme="dark"] .text-stone-900 {
+  color: #f4f7f5 !important;
+}
+
+[data-theme="dark"] .text-slate-700,
+[data-theme="dark"] .text-slate-600,
+[data-theme="dark"] .text-stone-700,
+[data-theme="dark"] .text-stone-600 {
+  color: #b5c7be !important;
+}
+
+[data-theme="dark"] .border-slate-200,
+[data-theme="dark"] .border-stone-200,
+[data-theme="dark"] .border-stone-300,
+[data-theme="dark"] .divide-stone-200 > :not([hidden]) ~ :not([hidden]) {
+  border-color: #233d34 !important;
+}
+
+/* Sertifika Tezhip Çerçevesi (Gönderilen sertifika-3.png formatında) */
+.certificate-ornate-frame {
+  background-color: #fcfaf5;
+  border: 6px double #5c3314;
+  outline: 2px solid #8c5828;
+  outline-offset: -12px;
+  background-image: radial-gradient(rgba(140, 88, 40, 0.06) 1px, transparent 1px);
+  background-size: 20px 20px;
+  color: #2b1d12;
+}
+
+/* Özel Kaydırma Çubuğu */
+::-webkit-scrollbar {
+  width: 7px;
+  height: 7px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(124, 79, 32, 0.35);
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(124, 79, 32, 0.55);
 }

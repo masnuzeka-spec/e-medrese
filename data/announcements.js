@@ -1,19 +1,51 @@
 // ============================================================================
 // data/announcements.js
-// Kamp duyuruları ve genel duyurular bu dosyada tutulur.
-// campId: "imam-gazali" | "imam-nevevi" | "general"
+// Kamp duyuruları ve ana sayfadaki genel duyurular
 // ============================================================================
 
 window.EMEDRESE_ANNOUNCEMENTS = [
+  // Genel Duyurular (Ana Sayfada da görünür)
+  {
+    id: 901,
+    campId: "general",
+    category: "Genel Duyuru",
+    title: "Büyüklerin Ayak İzleri Yeni Dönem Kamp Takvimi Yayınlandı",
+    date: "01.11.2026",
+    isNew: true,
+    actionText: "Takvimi İncele",
+    body: "Hicrî 1448 eğitim dönemimiz boyunca her ay bir İslam âliminin hayatını ve eserlerini merkeze alan online kamplarımız devam edecektir. Tamamlanan kamplarınızın sertifikalarına ve ders arşivlerine istediğiniz zaman ilgili kampın odasından ulaşabilirsiniz."
+  },
+  {
+    id: 902,
+    campId: "general",
+    category: "Genel Duyuru",
+    title: "Yoklama Onayı ve Sertifika Hak Ediş Kuralları Hakkında",
+    date: "25.10.2026",
+    isNew: false,
+    actionText: "",
+    body: "Kamplarımızda katılım sertifikası almaya hak kazanabilmek için derslerin en az %80'inin yoklamasını onaylamanız gerekmektedir. Canlı ders esnasında veya ders sonrasında ilgili kampın 'Yoklamalar' sekmesinden katılımınızı tek tıkla bildirebilirsiniz."
+  },
+  {
+    id: 903,
+    campId: "general",
+    category: "Genel Duyuru",
+    title: "Sertifika İsim ve Profil Bilgileri Kontrolü",
+    date: "20.10.2026",
+    isNew: false,
+    actionText: "Profilime Git",
+    body: "Hazırlanan sertifikalarda 'Profilim' sayfasında yer alan Ad ve Soyad bilgileriniz kullanılmaktadır. Lütfen bilgilerinizi kontrol ediniz."
+  },
+
+  // İmâm Gazâlî Kampı (Aktif Kamp) Duyuruları
   {
     id: 201,
     campId: "imam-gazali",
     category: "İmâm Gazâlî Kampı",
-    title: "6. Ders (Eyyühe'l-Veled Okumaları - 3) Canlı Yoklaması Açıldı!",
-    date: "03.11.2026",
+    title: "6. Ders (Eyyühe'l-Veled Okumaları - 3) Yoklaması Açıldı!",
+    date: "04.11.2026",
     isNew: true,
-    actionText: "Yoklama Ekranına Git",
-    body: "Dr. Öğr. Üyesi Mesut Çakır hocamız ile gerçekleştirdiğimiz 6. dersin canlı yayın yoklaması açılmıştır. Yoklama sekmesinden takip edebilirsiniz."
+    actionText: "Yoklama Sekmesine Git",
+    body: "Dr. Öğr. Üyesi Mesut Çakır hocamız ile gerçekleştirdiğimiz 6. dersin yoklaması açılmıştır. Kamp içindeki 'Yoklamalar' sekmesinden katılımınızı onaylayabilirsiniz."
   },
   {
     id: 202,
@@ -21,29 +53,31 @@ window.EMEDRESE_ANNOUNCEMENTS = [
     category: "İmâm Gazâlî Kampı",
     title: "📖 Eyyühe'l-Veled (Ey Oğul) Risalesi Çalışma Metni (PDF)",
     date: "28.10.2026",
-    isNew: true,
+    isNew: false,
     actionText: "PDF Metni İndir (3.1 MB)",
     body: "Kamp boyunca takip edeceğimiz Eyyühe'l-Veled risalesinin Arapça-Türkçe karşılaştırmalı metin kitapçığını ve ders takip çizelgesini indirebilirsiniz."
   },
+
+  // İmâm Nevevî Kampı (Biten Kamp) Duyuruları
   {
     id: 1,
     campId: "imam-nevevi",
     category: "İmâm Nevevî Kampı",
     title: "Sınava Hazırlık İçin 400 Soruluk Test Botu",
     date: "04.10.2026",
-    isNew: true,
+    isNew: false,
     actionText: "Test Botunu Başlat",
-    body: "Kamp süresince işlenen 13 dersin tamamını kapsayan 400 soruluk interaktif hazırlık botumuz erişime açılmıştır. Sınav öncesinde kendinizi test edebilirsiniz."
+    body: "Kamp süresince işlenen 13 dersin tamamını kapsayan 400 soruluk interaktif hazırlık botumuz erişime açılmıştır."
   },
   {
     id: 2,
     campId: "imam-nevevi",
     category: "İmâm Nevevî Kampı",
-    title: "İmâm Nevevî Kampı Sınavı Hakkında",
+    title: "İmâm Nevevî Kampı Sınavı ve Sertifikaları Hakkında",
     date: "03.10.2026",
     isNew: false,
-    actionText: "Sınav Yönergesini Oku",
-    body: "Kamp sonu değerlendirme sınavımız online olarak gerçekleştirilmiştir. Yoklama şartını sağlayan katılımcılarımız sertifika almaya hak kazanmıştır."
+    actionText: "Sertifika Sekmesine Git",
+    body: "Kampımız tamamlanmıştır. Yoklama şartını sağlayan tüm katılımcılarımızın sertifikaları 'Sertifika' sekmesinde indirmeye hazırdır."
   },
   {
     id: 3,
@@ -59,70 +93,22 @@ window.EMEDRESE_ANNOUNCEMENTS = [
     id: 4,
     campId: "imam-nevevi",
     category: "İmâm Nevevî Kampı",
-    title: "Değerlendirme Anketi",
-    date: "02.10.2026",
-    isNew: false,
-    actionText: "Ankete Katıl",
-    body: "Sonraki Büyüklerin Ayak İzleri kamplarımızı daha verimli hale getirebilmemiz için görüş ve önerilerinizi ankette paylaşabilirsiniz."
-  },
-  {
-    id: 5,
-    campId: "imam-nevevi",
-    category: "İmâm Nevevî Kampı",
-    title: "el-Ezkâr Hadis Meclisi Hakkında",
-    date: "01.10.2026",
-    isNew: false,
-    actionText: "Detayları Gör",
-    body: "Şeyh Yahya el-Gavsânî hocamız ile gerçekleştirilen el-Ezkâr Hadis Meclisi oturumunun kaydı ve icazet bilgilendirmesi."
-  },
-  {
-    id: 6,
-    campId: "imam-nevevi",
-    category: "İmâm Nevevî Kampı",
     title: "el-Ezkâr Hadis Meclisi Metni",
     date: "30.09.2026",
     isNew: false,
     actionText: "Metni İndir (PDF)",
     body: "Mecliste okunan zikir ve dua hadislerinin Arapça-Türkçe karşılıklı metin dosyası."
   },
+
+  // Ömer bin Abdülazîz Kampı (Biten Kamp) Duyuruları
   {
-    id: 7,
-    campId: "imam-nevevi",
-    category: "İmâm Nevevî Kampı",
-    title: "40 Hadis Okumaları Hakkında Önemli Duyuru ve Müjde",
-    date: "25.09.2026",
+    id: 401,
+    campId: "omer-bin-abdulaziz",
+    category: "Ömer bin Abdülazîz Kampı",
+    title: "📖 Ömer bin Abdülazîz Kampı Ders Notları Özeti (PDF)",
+    date: "15.08.2026",
     isNew: false,
-    actionText: "",
-    body: "40 Hadis Okumaları derslerimizin tamamına katılan talebelerimiz için ek okuma halkaları ve kaynak tavsiyeleri paylaşılmıştır."
-  },
-  {
-    id: 8,
-    campId: "imam-nevevi",
-    category: "İmâm Nevevî Kampı",
-    title: "Prof. Dr. Nail Okuyucu Hocamızın Sunum Dosyası",
-    date: "23.09.2026",
-    isNew: false,
-    actionText: "Sunumu İndir (PDF)",
-    body: "İmâm Nevevî'nin Hayatı ve Eserleri dersinde kullanılan kronolojik harita ve eser şeması sunumu."
-  },
-  {
-    id: 9,
-    campId: "general",
-    category: "Genel",
-    title: "İlk Dersin Yoklamasını Kaçıran Kardeşlerimiz İçin Önemli Duyuru",
-    date: "22.09.2026",
-    isNew: false,
-    actionText: "",
-    body: "İlk gün yaşanan yoğunluk sebebiyle yoklama butonuna tıklayamayan kardeşlerimiz için telafi yoklama ekranı tanımlanmıştır."
-  },
-  {
-    id: 10,
-    campId: "general",
-    category: "Genel",
-    title: "Kampa Kayıt ve Katılım Adımları Rehberi",
-    date: "20.09.2026",
-    isNew: false,
-    actionText: "Rehberi İncele",
-    body: "e-Medrese sistemi üzerinden ders takibi, yoklama onayı ve sertifika sorgulama adımlarını anlatan görsel kılavuz."
+    actionText: "PDF Kitapçığı İndir (2.8 MB)",
+    body: "Kamp boyunca işlenen derslerin özet notları, kronoloji cetveli ve Ömer bin Abdülazîz'in hutbeleri PDF kitapçığı olarak hazırlanmıştır."
   }
 ];

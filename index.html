@@ -1,22 +1,341 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>E-Medrese</title>
-<link rel="icon" href="assets/img/logo.svg">
-<link rel="stylesheet" href="css/style.css?v=5">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>E-Medrese | Siyer Vakfı & Siyer TV Kamp Portalı</title>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Amiri:wght@700&family=Great+Vibes&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css" />
 </head>
-<body>
-<header class="top"><div class="wrap bar">
-  <a href="#/" class="brand"><img src="assets/img/logo.svg" alt=""><span>E-Medrese</span></a>
-  <div class="acts"><button id="theme" class="icon" aria-label="Tema">🌙</button><a href="#/profil" id="prof" class="icon av" aria-label="Profil"></a></div>
-</div></header>
-<main id="app" class="wrap"></main>
-<script src="data/user.js?v=5"></script>
-<script src="data/camps.js?v=5"></script>
-<script src="data/lessons.js?v=5"></script>
-<script src="data/announcements.js?v=5"></script>
-<script src="js/app.js?v=5"></script>
+<body class="h-[100dvh] overflow-hidden flex flex-col" data-theme="light">
+
+  <!-- ÜST BAR (HEADER) - KAMP İÇİNDEYKEN KAMP ADINI GÖSTERİR, SAĞ ÜSTTE DUYURU + GECE MODU + PROFİL -->
+  <header class="emedrese-header shrink-0 z-30">
+    <div id="headerInner" class="max-w-7xl mx-auto px-4 sm:px-8 h-16 flex items-center justify-between gap-3">
+      <!-- Sol: Logo + E-Medrese + Seçili Kamp Adı (Özellik 2) -->
+      <div class="flex items-center gap-2 sm:gap-3 min-w-0">
+        <button id="brandLogoBtn" type="button" class="flex items-center gap-2.5 text-left focus:outline-none group shrink-0">
+          <img src="assets/img/logo.svg" alt="E-Medrese Logosu" class="w-10 h-10 rounded-xl shadow-md group-hover:scale-105 transition shrink-0" />
+          <span class="font-heading font-extrabold text-lg sm:text-xl tracking-tight text-[#e5b84b]">
+            E-Medrese
+          </span>
+        </button>
+
+        <!-- Kampa girildiğinde otomatik açılan Kamp Adı göstergesi -->
+        <button id="headerCampBreadcrumb" type="button" class="hidden items-center gap-1.5 sm:gap-2 text-left min-w-0 px-2.5 py-1 rounded-lg bg-white/10 hover:bg-white/15 border border-[#c8962e]/35 transition focus:outline-none">
+          <span class="text-[#e5b84b] font-bold text-xs">›</span>
+          <span id="headerCampBreadcrumbTitle" class="font-heading font-bold text-xs sm:text-sm text-white truncate max-w-[150px] sm:max-w-xs">
+            İmâm Nevevî Kampı
+          </span>
+        </button>
+      </div>
+
+      <!-- Sağ Üst Köşe: Genel Duyurular Butonu (🔔), Gece Modu (🌙) ve Profil (ED) -->
+      <div class="flex items-center gap-2 sm:gap-2.5 shrink-0">
+        <button id="topGeneralAnnBtn" type="button" title="Genel Duyurular" class="relative w-10 h-10 rounded-full bg-[#1c4d3d] hover:bg-[#25614e] border border-[#c8962e]/40 text-[#e5b84b] flex items-center justify-center transition focus:outline-none">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/>
+          </svg>
+          <span class="w-2 h-2 rounded-full bg-[#e5b84b] absolute top-2 right-2"></span>
+        </button>
+
+        <button id="themeToggleBtn" type="button" title="Açık / Koyu Mod" class="w-10 h-10 rounded-full bg-[#1c4d3d] hover:bg-[#25614e] border border-[#c8962e]/40 text-[#e5b84b] flex items-center justify-center text-base transition focus:outline-none">
+          <span id="themeToggleIcon">🌙</span>
+        </button>
+
+        <button id="profileDropdownBtn" type="button" title="Profilim" class="h-10 px-3.5 rounded-xl bg-[#d8a634] hover:bg-[#e3b342] text-[#133b2e] font-heading font-extrabold text-sm flex items-center justify-center shadow-sm transition focus:outline-none">
+          ED
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ORTA KAYDIRILABİLİR ANA İÇERİK ALANI (Sayfa kayarken üst ve alt bar sabit kalır) -->
+  <main id="mainContent" class="flex-1 overflow-y-auto">
+    <div class="max-w-7xl mx-auto px-4 sm:px-8 py-6 sm:py-8 space-y-7">
+
+      <!-- ==================== 1. ANA SAYFA (SADECE KAMPLAR) & KAMP ODASI ==================== -->
+      <section id="tab-kamplar" class="space-y-7">
+
+        <!-- A) ANA SAYFA EKRANI: SADECE KAMPLAR (AKTİF KAMPLAR & BİTEN KAMPLAR) -->
+        <div id="campsHubView" class="space-y-7">
+
+          <h1 class="font-heading text-2xl sm:text-3xl font-extrabold text-heading-main">
+            Kamplarım
+          </h1>
+
+          <!-- 🟢 AKTİF KAMPLAR -->
+          <div id="activeCampsSectionWrap" class="space-y-3.5">
+            <div class="flex items-center gap-2">
+              <span class="w-2.5 h-2.5 rounded-full bg-[#1f7a53]"></span>
+              <h2 class="font-heading text-xs sm:text-sm font-extrabold uppercase tracking-wider text-[#1f7a53]">
+                AKTİF KAMPLAR
+              </h2>
+            </div>
+            <div id="activeCampsGrid" class="space-y-5"></div>
+          </div>
+
+          <!-- 🏁 BİTEN KAMPLAR (Birden Fazla Biten Kamp Desteği) -->
+          <div id="completedCampsSectionWrap" class="space-y-3.5">
+            <div class="flex items-center gap-2">
+              <span class="w-2.5 h-2.5 rounded-full bg-[#7c4f20]"></span>
+              <h2 class="font-heading text-xs sm:text-sm font-extrabold uppercase tracking-wider text-[#7c4f20]">
+                BİTEN KAMPLAR
+              </h2>
+            </div>
+            <div id="completedCampsGrid" class="grid grid-cols-1 xl:grid-cols-2 gap-6"></div>
+          </div>
+
+        </div>
+
+        <!-- B) KAMP İÇİ EKRAN (KAMPA TIKLANDIĞINDA AÇILIR; SEKME BUTONLARI ALTTAKİ SABİT BARDADIR) -->
+        <div id="campWorkspaceView" class="hidden space-y-5">
+          <div id="campWorkspaceHeader"></div>
+          <div id="campWorkspaceBody"></div>
+        </div>
+
+      </section>
+
+      <!-- ==================== 2. GENEL DUYURULAR SAYFASI ==================== -->
+      <section id="tab-duyurular" class="hidden space-y-5">
+        <div class="emedrese-card p-5 sm:p-6">
+          <h1 class="font-heading text-xl sm:text-2xl font-extrabold text-heading-main">Duyurular ve Kamp Materyalleri</h1>
+          <p class="text-xs sm:text-sm text-muted-main mt-1">Genel sistem duyuruları ve katıldığınız kamplara ait ders materyalleri.</p>
+        </div>
+        <div id="announcementsContainer" class="space-y-3"></div>
+      </section>
+
+      <!-- ==================== 3. ZENGİNLEŞTİRİLMİŞ PROFİLİM SAYFASI ==================== -->
+      <section id="tab-profil" class="hidden space-y-7">
+
+        <!-- 1. İlim Talebesi Karne Özeti (4 Kutu) -->
+        <div class="grid grid-cols-2 lg:grid-cols-4 gap-3.5 sm:gap-5">
+          <div class="emedrese-card p-4 sm:p-5 flex items-center gap-3.5">
+            <div class="w-11 h-11 rounded-xl bg-[#133b2e] text-[#d8a634] flex items-center justify-center font-bold text-lg shrink-0">
+              🕌
+            </div>
+            <div>
+              <div class="font-heading text-xl sm:text-2xl font-extrabold text-heading-main">3 Kamp</div>
+              <div class="text-xs font-medium text-muted-main">1 Aktif • 2 Tamamlanan</div>
+            </div>
+          </div>
+
+          <div class="emedrese-card p-4 sm:p-5 flex items-center gap-3.5">
+            <div class="w-11 h-11 rounded-xl bg-emerald-100 text-[#1f7a53] flex items-center justify-center font-bold text-lg shrink-0">
+              📺
+            </div>
+            <div>
+              <div class="font-heading text-xl sm:text-2xl font-extrabold text-heading-main">28 Ders</div>
+              <div class="text-xs font-medium text-muted-main">Tamamlanan Ders</div>
+            </div>
+          </div>
+
+          <div class="emedrese-card p-4 sm:p-5 flex items-center gap-3.5">
+            <div class="w-11 h-11 rounded-xl bg-amber-100 text-[#7c4f20] flex items-center justify-center font-bold text-lg shrink-0">
+              ✅
+            </div>
+            <div>
+              <div class="font-heading text-xl sm:text-2xl font-extrabold text-heading-main">%96</div>
+              <div class="text-xs font-medium text-muted-main">Yoklama Katılım Oranı</div>
+            </div>
+          </div>
+
+          <div class="emedrese-card p-4 sm:p-5 flex items-center gap-3.5">
+            <div class="w-11 h-11 rounded-xl bg-amber-100 text-[#7c4f20] flex items-center justify-center font-bold text-lg shrink-0">
+              🎓
+            </div>
+            <div>
+              <div class="font-heading text-xl sm:text-2xl font-extrabold text-heading-main">2 Belge</div>
+              <div class="text-xs font-medium text-muted-main">Kazanılan Sertifika</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+
+          <!-- Sol (7 Sütun): Kişisel Bilgiler & Sertifika İsim Ayarı -->
+          <div class="lg:col-span-7 emedrese-card p-5 sm:p-7 space-y-6">
+            <div class="flex flex-wrap items-center justify-between gap-3 pb-4 border-b border-stone-200/80">
+              <div class="flex items-center gap-4">
+                <div class="w-14 h-14 rounded-2xl bg-[#133b2e] text-[#d8a634] font-heading font-extrabold text-xl flex items-center justify-center shadow-sm">
+                  ED
+                </div>
+                <div>
+                  <h2 id="profileDisplayName" class="font-heading text-lg sm:text-xl font-extrabold text-heading-main">Emrullah Demir</h2>
+                  <p class="text-xs sm:text-sm text-muted-main">dmremrllh@hotmail.com • Öğretmen (Siirt)</p>
+                </div>
+              </div>
+
+              <button id="toggleEditProfileBtn" type="button" class="px-4 py-2 rounded-xl text-xs font-bold bg-[#133b2e] text-[#d8a634] hover:opacity-95 transition">
+                Bilgileri Düzenle
+              </button>
+            </div>
+
+            <form id="profileForm" class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div>
+                <label class="block text-xs font-bold text-muted-main uppercase mb-1">Ad (Sertifikada Görünür)</label>
+                <input id="inpFirstName" type="text" value="Emrullah" disabled class="profile-input w-full px-3.5 py-2.5 rounded-xl border border-stone-200 bg-stone-50 text-heading-main font-semibold text-sm" />
+              </div>
+              <div>
+                <label class="block text-xs font-bold text-muted-main uppercase mb-1">Soyad (Sertifikada Görünür)</label>
+                <input id="inpLastName" type="text" value="Demir" disabled class="profile-input w-full px-3.5 py-2.5 rounded-xl border border-stone-200 bg-stone-50 text-heading-main font-semibold text-sm" />
+              </div>
+              <div>
+                <label class="block text-xs font-bold text-muted-main uppercase mb-1">Cinsiyet</label>
+                <input id="inpGender" type="text" value="Erkek" disabled class="profile-input w-full px-3.5 py-2.5 rounded-xl border border-stone-200 bg-stone-50 text-heading-main font-semibold text-sm" />
+              </div>
+              <div>
+                <label class="block text-xs font-bold text-muted-main uppercase mb-1">Doğum Tarihi</label>
+                <input id="inpBirth" type="text" value="24.09.1990" disabled class="profile-input w-full px-3.5 py-2.5 rounded-xl border border-stone-200 bg-stone-50 text-heading-main font-semibold text-sm" />
+              </div>
+              <div>
+                <label class="block text-xs font-bold text-muted-main uppercase mb-1">Şehir</label>
+                <input id="inpCity" type="text" value="Siirt" disabled class="profile-input w-full px-3.5 py-2.5 rounded-xl border border-stone-200 bg-stone-50 text-heading-main font-semibold text-sm" />
+              </div>
+              <div>
+                <label class="block text-xs font-bold text-muted-main uppercase mb-1">Meslek</label>
+                <input id="inpJob" type="text" value="Öğretmen" disabled class="profile-input w-full px-3.5 py-2.5 rounded-xl border border-stone-200 bg-stone-50 text-heading-main font-semibold text-sm" />
+              </div>
+              <div class="sm:col-span-2">
+                <label class="block text-xs font-bold text-muted-main uppercase mb-1">Telefon</label>
+                <input id="inpPhone" type="text" value="+90 543 727 34 70" disabled class="profile-input w-full px-3.5 py-2.5 rounded-xl border border-stone-200 bg-stone-50 text-heading-main font-semibold text-sm" />
+              </div>
+
+              <div id="profileSaveActions" class="hidden sm:col-span-2 pt-2 flex justify-end gap-2">
+                <button id="cancelEditProfileBtn" type="button" class="px-4 py-2 rounded-xl text-xs font-semibold bg-stone-100 text-stone-700">İptal</button>
+                <button id="saveProfileBtn" type="submit" class="px-4 py-2 rounded-xl text-xs font-bold bg-[#1f7a53] text-white">Değişiklikleri Kaydet</button>
+              </div>
+            </form>
+          </div>
+
+          <!-- Sağ (5 Sütun): Kazanılan Sertifikalarım & Kamp Geçmişim -->
+          <div class="lg:col-span-5 space-y-6">
+            <div class="emedrese-card p-5 sm:p-6 space-y-4">
+              <h3 class="font-heading text-base font-extrabold text-heading-main flex items-center justify-between">
+                <span>🎓 Kazanılan Sertifikalarım</span>
+                <span class="text-xs font-bold text-[#7c4f20]">2 Adet</span>
+              </h3>
+
+              <div class="space-y-3">
+                <div class="p-3.5 rounded-xl bg-stone-50 border border-stone-200/80 flex items-center justify-between gap-3">
+                  <div class="flex items-center gap-3 min-w-0">
+                    <img src="assets/img/sertifika-emrullah-demir.jpg" alt="Sertifika" class="w-16 h-11 rounded-lg object-cover border border-stone-300 shrink-0" />
+                    <div class="min-w-0">
+                      <p class="text-xs sm:text-sm font-bold text-heading-main truncate">İmâm Nevevî Kampı</p>
+                      <p class="text-[11px] text-muted-main">06.10.2026 • SYR-1448-NVV-8942</p>
+                    </div>
+                  </div>
+                  <button type="button" data-cert-camp="imam-nevevi" class="prof-open-cert-btn px-3 py-1.5 rounded-lg bg-[#7c4f20] text-white text-xs font-bold shrink-0">
+                    Görüntüle
+                  </button>
+                </div>
+
+                <div class="p-3.5 rounded-xl bg-stone-50 border border-stone-200/80 flex items-center justify-between gap-3">
+                  <div class="flex items-center gap-3 min-w-0">
+                    <img src="assets/img/sertifika-emrullah-demir.jpg" alt="Sertifika" class="w-16 h-11 rounded-lg object-cover border border-stone-300 shrink-0" />
+                    <div class="min-w-0">
+                      <p class="text-xs sm:text-sm font-bold text-heading-main truncate">Ömer bin Abdülazîz Kampı</p>
+                      <p class="text-[11px] text-muted-main">15.08.2026 • SYR-1448-OBA-5519</p>
+                    </div>
+                  </div>
+                  <button type="button" data-cert-camp="omer-bin-abdulaziz" class="prof-open-cert-btn px-3 py-1.5 rounded-lg bg-[#7c4f20] text-white text-xs font-bold shrink-0">
+                    Görüntüle
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <div class="emedrese-card p-5 sm:p-6 space-y-4">
+              <h3 class="font-heading text-base font-extrabold text-heading-main">Kamp Geçmişim & Rozetler</h3>
+              <div class="flex flex-wrap gap-2">
+                <span class="text-xs font-bold px-3 py-1 rounded-full bg-emerald-100 text-emerald-800">🔥 İstikrarlı Talebe</span>
+                <span class="text-xs font-bold px-3 py-1 rounded-full bg-amber-100 text-amber-900">📖 40 Hadis Meclisi Mezunu</span>
+                <span class="text-xs font-bold px-3 py-1 rounded-full bg-stone-200 text-stone-800">🕌 Hicrî 1448 Dönemi</span>
+              </div>
+              <div class="space-y-2 pt-1 text-xs">
+                <button type="button" data-hist-camp="imam-gazali" class="prof-open-camp-btn w-full p-2.5 rounded-lg hover:bg-stone-100 flex items-center justify-between font-semibold text-heading-main transition">
+                  <span>🟢 İmâm Gazâlî Kampı (Devam Ediyor)</span>
+                  <span class="text-[#1f7a53] font-bold">5/10 Ders →</span>
+                </button>
+                <button type="button" data-hist-camp="imam-nevevi" class="prof-open-camp-btn w-full p-2.5 rounded-lg hover:bg-stone-100 flex items-center justify-between font-semibold text-heading-main transition">
+                  <span>🏁 İmâm Nevevî Kampı (Tamamlandı)</span>
+                  <span class="text-[#7c4f20] font-bold">13/13 Ders →</span>
+                </button>
+                <button type="button" data-hist-camp="omer-bin-abdulaziz" class="prof-open-camp-btn w-full p-2.5 rounded-lg hover:bg-stone-100 flex items-center justify-between font-semibold text-heading-main transition">
+                  <span>🏁 Ömer bin Abdülazîz Kampı (Tamamlandı)</span>
+                  <span class="text-[#7c4f20] font-bold">10/10 Ders →</span>
+                </button>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <!-- ÖZELLİK 1: EN ALTTA SABİT DURAN KONTROL BARI (Hem Mobilde Hem Masaüstünde Aktif, Sayfa Kayarken Sabit) -->
+  <!-- Ana Sayfada: [Kamplar | Duyurular | Profilim] -->
+  <!-- Kampa Tıklanınca: [⬅ Ana Sayfa | 📺 Dersler | ✅ Yoklamalar | 📢 Duyurular | 🎓 Sertifika] -->
+  <nav id="mobileBottomNav" class="shrink-0 emedrese-bottom-dock px-2 py-2 z-30 flex items-center justify-center shadow-2xl"></nav>
+
+  <!-- MODAL 1: DERS DETAY VE VİDEO ÖNİZLEME -->
+  <div id="lessonDetailModal" class="hidden fixed inset-0 bg-black/65 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+    <div class="emedrese-card max-w-lg w-full p-5 sm:p-6 shadow-2xl space-y-4">
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <span id="modalLessonBadge" class="text-[11px] font-bold px-2.5 py-0.5 rounded-full bg-emerald-100 text-emerald-800">Ders & Yoklama Detayı</span>
+          <h3 id="modalLessonTitle" class="font-heading text-base sm:text-lg font-extrabold text-heading-main mt-1.5">Ders Başlığı</h3>
+          <p id="modalLessonInstructor" class="text-xs sm:text-sm text-[#7c4f20] font-bold mt-0.5">Hoca Adı</p>
+        </div>
+        <button id="closeLessonModalBtn" type="button" class="p-1.5 rounded-lg text-muted-main hover:bg-stone-100">✕</button>
+      </div>
+
+      <div class="bg-stone-50 rounded-xl p-3.5 border border-stone-200 text-xs space-y-1.5">
+        <div class="flex justify-between">
+          <span class="text-muted-main">Yayın Tarihi ve Süre:</span>
+          <span id="modalLessonDate" class="font-bold text-heading-main">21.09.2026</span>
+        </div>
+      </div>
+
+      <p id="modalLessonSummary" class="text-xs sm:text-sm text-body-main leading-relaxed"></p>
+
+      <div class="flex items-center justify-end gap-2 pt-2">
+        <button id="modalOpenPdfBtn" type="button" class="px-3.5 py-2 rounded-xl text-xs font-bold bg-stone-100 text-heading-main hover:bg-stone-200">
+          📖 Ders Notu Kitapçığına Git
+        </button>
+        <button id="modalDoneBtn" type="button" class="px-4 py-2 rounded-xl text-xs font-bold bg-[#133b2e] text-[#d8a634]">
+          Kapat
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL 2: SERTİFİKA TAM EKRAN BÜYÜTEÇ -->
+  <div id="certLightboxModal" class="hidden fixed inset-0 bg-black/85 backdrop-blur-sm z-50 flex flex-col items-center justify-center p-4">
+    <div class="max-w-4xl w-full flex items-center justify-between text-white mb-3">
+      <span class="text-sm font-bold">Emrullah Demir — Katılım Sertifikası</span>
+      <button id="closeCertLightboxBtn" type="button" class="px-3 py-1.5 rounded-lg bg-white/15 hover:bg-white/25 text-xs font-bold">✕ Kapat</button>
+    </div>
+    <div class="max-w-4xl w-full rounded-2xl overflow-hidden shadow-2xl border border-white/20">
+      <img src="assets/img/sertifika-emrullah-demir.jpg" alt="Tam Ekran Sertifika" class="w-full h-auto block" />
+    </div>
+  </div>
+
+  <!-- TOAST BİLDİRİMİ -->
+  <div id="toastNotification" class="hidden fixed bottom-20 right-4 sm:right-6 bg-[#133b2e] text-white px-4 py-3 rounded-xl shadow-xl border border-[#c8962e] text-xs sm:text-sm font-semibold flex items-center gap-2.5 z-50">
+    <span class="w-2 h-2 rounded-full bg-[#e5b84b]"></span>
+    <span id="toastMessageText">İşlem tamamlandı.</span>
+  </div>
+
+  <!-- MODÜLER VERİ VE UYGULAMA DOSYALARI -->
+  <script src="data/camps.js"></script>
+  <script src="data/lessons.js"></script>
+  <script src="data/announcements.js"></script>
+  <script src="data/user.js"></script>
+  <script src="js/app.js"></script>
 </body>
 </html>
